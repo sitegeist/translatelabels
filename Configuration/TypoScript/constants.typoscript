@@ -1,0 +1,2 @@
+# cat=translatelabels/storage/10; type=int; label=storagePid of sysfolder to store translation records
+plugin.tx_translatelabels.settings.storagePid = 0

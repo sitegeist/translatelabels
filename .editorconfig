@@ -1,0 +1,91 @@
+# EditorConfig is awesome: http://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+###############
+# Source Code #
+###############
+
+# JavaScript
+[*.js]
+indent_style = space
+indent_size = 2
+
+# Stylesheets
+[*.{css,scss}]
+indent_style = space
+indent_size = 4
+
+# HTML
+[*.{htm,html}]
+indent_style = space
+indent_size = 4
+
+# PHP
+[*.php]
+indent_style = space
+indent_size = 4
+
+######################
+# Configuration/Data #
+######################
+
+# JSON
+[*.json]
+indent_style = space
+indent_size = 4
+
+# YAML
+[*.{yml,yaml,gitlabci.yml}]
+indent_style = space
+indent_size = 2
+
+# Fusion, TypoScript2
+[*.fusion,*.ts2]
+indent_style = space
+indent_size = 4
+
+# TypoScript
+[{*.ts,*.typoscript,ext_typoscript_setup.txt,constants.txt,setup.txt,ext_conf_template.txt}]
+indent_style = space
+indent_size = 4
+
+# XML, XLF
+[*.{xml,xlf}]
+indent_style = tab
+
+# SQL
+[*.sql]
+indent_style = tab
+
+# Special files
+[{package.json,.stylelintrc,.eslintrc}]
+indent_style = space
+indent_size = 2
+
+# Apache configuration
+[.htaccess]
+indent_style = tab
+
+######################
+# Documentation/Text #
+######################
+
+# ReST
+[*.rst]
+indent_style = space
+indent_size = 3
+
+# Markdown
+[*.md]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = false

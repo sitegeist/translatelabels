@@ -1,0 +1,47 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:if condition="{showTranslateLabels}">
+        <f:then>
+    <div class="typo3-adminPanel-table-overflow tx_translatelabels-translations" data-typo3-ajax-url="{saveUrl}">
+        <table class="typo3-adminPanel-table tx_translatelabels-translations">
+            <thead>
+                <tr>
+                    <th><f:translate key="LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:sub.column.identifier.label" extensionName="adminpanel" /></th>
+                    <th><f:translate key="LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:sub.column.value.label-editable" extensionName="adminpanel" /></th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+            <f:for each="{labels}" as="label">
+                <tr data-translatelabels-key="{label.key}">
+                    <td style="width:20%; padding-right:20px;">
+                        <a href="{label.linkToBE}" target="backend">{label.identifier}</a>
+                    </td>
+                    <td style="width:50%; padding-right:10px;">
+                        <div>
+                            <div class="orig-translation" style="display: none">{label.value}</div>
+                            <div class="editable" contenteditable="true" style="padding: 5px">{label.value}</div>
+                            <f:form.button class="typo3-adminPanel-btn typo3-adminPanel-btn-default" data="{'typo3-ajax-url': saveUrl, 'typo3-role': 'translateButton', 'typo3-key': label.key, 'typo3-sysLanguageUid': sysLanguageUid, 'typo3-storagePid' : storagePid}" type="button" style="display: none">
+                                {f:translate(key:'LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:button.translate', extensionName: 'adminpanel')}
+                            </f:form.button>
+                            <f:form.button class="typo3-adminPanel-btn typo3-adminPanel-btn-default" data="{'typo3-role': 'undoButton'}" type="button" style="display: none">
+                                {f:translate(key:'LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:button.undo', extensionName: 'adminpanel')}
+                            </f:form.button>
+                            <div class="status-message translatelabels-status-message"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="typo3-adminPanel-btn typo3-adminPanel-btn-default" href="{label.linkToBE}" target="backend">
+                            <f:format.raw>{editIcon}</f:format.raw>
+                        </a>
+                    </td>
+                </tr>
+            </f:for>
+            </tbody>
+        </table>
+    </div>
+        </f:then>
+        <f:else>
+            <f:translate key="LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:sub.noticeShowLabelsSwitchedOff" extensionName="adminpanel" />
+        </f:else>
+    </f:if>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-11-20T07:56:21Z" product-name="translatelabels">
+		<header/>
+		<body>
+			<trans-unit id="settings.show_translation_labels">
+				<source>Show translation labels</source>
+			</trans-unit>
+			<trans-unit id="sub.general.label">
+				<source>Translations</source>
+			</trans-unit>
+			<trans-unit id="sub.column.key.label">
+				<source>Language file</source>
+			</trans-unit>
+			<trans-unit id="sub.column.identifier.label">
+				<source>Identifier</source>
+			</trans-unit>
+			<trans-unit id="sub.column.value.label">
+				<source>Translation in current language</source>
+			</trans-unit>
+			<trans-unit id="sub.column.value.label-editable">
+				<source>Translation in current language (inline editable)</source>
+			</trans-unit>
+			<trans-unit id="sub.column.overrides.label">
+				<source>Overrides</source>
+			</trans-unit>
+			<trans-unit id="sub.noticeShowLabelsSwitchedOff">
+				<source>Showing the labels is switched off in settings of Admin Panel. Switch them on to see labels
+					here.
+				</source>
+			</trans-unit>
+			<trans-unit id="sub.module.label">
+				<source>Translate Labels</source>
+			</trans-unit>
+			<trans-unit id="button.translate">
+				<source>Translate</source>
+			</trans-unit>
+			<trans-unit id="button.undo">
+				<source>Undo</source>
+			</trans-unit>
+			<trans-unit id="sub.module.ajax.success">
+			    <source>Successfully saved.</source>
+			</trans-unit>
+			<trans-unit id="tooltip.message">
+				<source><![CDATA[Translate label &quot;%s&quot; ...]]></source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
