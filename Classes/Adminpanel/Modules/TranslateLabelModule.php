@@ -15,7 +15,7 @@ namespace Sitegeist\Translatelabels\Adminpanel\Modules;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\AbstractModule;
 use TYPO3\CMS\Adminpanel\ModuleApi\ConfigurableInterface;
-use TYPO3\CMS\Adminpanel\ModuleApi\InitializableInterface;
+use TYPO3\CMS\Adminpanel\ModuleApi\RequestEnricherInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\ResourceProviderInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\ShortInfoProviderInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\PageSettingsProviderInterface;
@@ -25,7 +25,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 /**
  * TranslateLabel Module of the AdminPanel
  */
-class TranslateLabelModule extends AbstractModule implements InitializableInterface, ShortInfoProviderInterface, PageSettingsProviderInterface, ResourceProviderInterface, ConfigurableInterface
+class TranslateLabelModule extends AbstractModule implements ShortInfoProviderInterface, PageSettingsProviderInterface, ResourceProviderInterface, ConfigurableInterface, RequestEnricherInterface
 {
 
     /**
@@ -62,17 +62,12 @@ class TranslateLabelModule extends AbstractModule implements InitializableInterf
     /**
      * @inheritdoc
      */
-    public function initializeModule(ServerRequestInterface $request): void
+    public function enrich(ServerRequestInterface $request): ServerRequestInterface
     {
-        $this->config = [
-            'showTranslationLabels' => (bool)$this->configurationService->getConfigurationOption('translatelabels', 'showTranslationLabels')
-        ];
-        if ($this->config['showTranslationLabels']) {
-            // forcibly unset fluid caching as it does not care about the tsfe based caching settings
-            // pages must not be cached because otherwise the LLL(...) tags are cached and displayed for end users
-            unset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['fluid_template']['frontend']);
-            $GLOBALS['TSFE']->set_no_cache('Cache is disabled if fluid debugging is enabled', true);
+        if ((bool)$this->configurationService->getConfigurationOption('translatelabels', 'showTranslationLabels')) {
+            $request = $request->withAttribute('noCache', true);
         }
+        return $request;
     }
 
     /**

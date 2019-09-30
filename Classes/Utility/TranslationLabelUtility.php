@@ -166,7 +166,9 @@ class TranslationLabelUtility
             // only for uncached pages as no_cache is set by admin panel
             // otherwise we could generate LLL tags into cached pages and will not replace them
             // in FE if no BE user is logged-in.
-            && $GLOBALS['TSFE']->no_cache === true);
+            // @TODO: Check if request in uncached (we need the request object here ...
+            // && $GLOBALS['TSFE']->no_cache === true
+        );
     }
 
     /**
