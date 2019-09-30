@@ -11,7 +11,7 @@ use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
  * This file is part of the "translatelabels" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
+ * LICENSE file that was distributed with this source code.
  *
  */
 
