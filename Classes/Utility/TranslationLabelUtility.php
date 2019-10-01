@@ -188,8 +188,18 @@ class TranslationLabelUtility
         $languageFile = strrev($reversedParts[1]);
         $extendedLabelKey = $labelKey;
         if ($languageFile === '') {
-            $extendedLabelKey = 'LLL:EXT:' . self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
+            // $extendedLabelKey = 'LLL:EXT:' . self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
+            $extendedLabelKey = self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
         }
         return $extendedLabelKey;
+    }
+
+    public static function getLabelKeyWithoutPrefixes($labelKey)
+    {
+        // remove leading 'LLL:'
+        $labelKey = (strpos($labelKey,'LLL:') === 0) ? substr($labelKey, 4) : $labelKey;
+        // remove leading 'EXT:'
+        $labelKey = (strpos($labelKey, 'EXT:') === 0) ? substr($labelKey, 4) : $labelKey;
+        return $labelKey;
     }
 }

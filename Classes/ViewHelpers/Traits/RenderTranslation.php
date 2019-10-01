@@ -36,7 +36,8 @@ trait RenderTranslation
 
         if (TYPO3_MODE === 'FE' && $value !== '') {
             // language files in chain of form framework are without LLL:, all others use this prefix
-            $id = (strpos($translationKey, 'LLL:') === 0) ? $translationKey : 'LLL:' . $translationKey;
+            // $id = (strpos($translationKey, 'LLL:') === 0) ? $translationKey : 'LLL:' . $translationKey;
+            $id = TranslationLabelUtility::getLabelKeyWithoutPrefixes($translationKey);
             $value = TranslationLabelUtility::readLabelFromDatabase($id, $value);
             if (\is_array($translateArguments) && count($translateArguments) > 0 && $value !== null) {
                 $value = sprintf($value, ...array_values($translateArguments)) ?: sprintf(
