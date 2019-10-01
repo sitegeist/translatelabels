@@ -111,7 +111,8 @@
           interactive: true,
           allowHTML: true,
           followCursor: true,
-          content: tooltipContent
+          content: tooltipContent,
+          maxWidth: 500
         });
       }
     });
