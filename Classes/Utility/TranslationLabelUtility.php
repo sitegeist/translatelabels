@@ -160,7 +160,7 @@ class TranslationLabelUtility
         }
         return ($isLoggedIn !== 0
             && TYPO3_MODE === 'FE'
-            && strpos($labelKey, 'LLL:EXT:adminpanel') !== 0
+            && strpos($labelKey, 'adminpanel') !== 0
             && $extensionName !== 'adminpanel'
             && $showTranslationLabels === '1'
             // only for uncached pages as no_cache is set by admin panel
@@ -173,7 +173,8 @@ class TranslationLabelUtility
      * @param $extensionName
      * @return string
      */
-    public static function getDefaultLanguageFile($extensionName) {
+    public static function getDefaultLanguageFile($extensionName)
+    {
         return GeneralUtility::camelCaseToLowerCaseUnderscored($extensionName) . '/Resources/Private/Language/locallang.xlf';
     }
 
@@ -191,13 +192,13 @@ class TranslationLabelUtility
             // $extendedLabelKey = 'LLL:EXT:' . self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
             $extendedLabelKey = self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
         }
-        return $extendedLabelKey;
+        return self::getLabelKeyWithoutPrefixes($extendedLabelKey);
     }
 
     public static function getLabelKeyWithoutPrefixes($labelKey)
     {
         // remove leading 'LLL:'
-        $labelKey = (strpos($labelKey,'LLL:') === 0) ? substr($labelKey, 4) : $labelKey;
+        $labelKey = (strpos($labelKey, 'LLL:') === 0) ? substr($labelKey, 4) : $labelKey;
         // remove leading 'EXT:'
         $labelKey = (strpos($labelKey, 'EXT:') === 0) ? substr($labelKey, 4) : $labelKey;
         return $labelKey;
