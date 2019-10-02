@@ -62,8 +62,8 @@ class CreateLabelResolver implements MiddlewareInterface
             if ($labelRecordInDefaultLanguage === null) {
                 // create record in default language on the fly
                 $translationKey = $queryParams['tx_translatelabels']['key'];
-                if (strpos($translationKey, 'LLL:') !== 0) {
-                    $translationKey = 'LLL:' . $translationKey;
+                if (strpos($translationKey, 'LLL:EXT:') !== 0) {
+                    $translationKey = 'LLL:EXT:' . $translationKey;
                 }
 
                 $translationInDefaultLanguage = LocalizationUtility::translate(
@@ -93,7 +93,7 @@ class CreateLabelResolver implements MiddlewareInterface
                         $queryParams['tx_translatelabels']['pid'],
                         $uidOfTranslationInDefaultLanguage
                     ),
-                    303
+                    307
                 );
             }
 
@@ -123,7 +123,7 @@ class CreateLabelResolver implements MiddlewareInterface
                         $queryParams['tx_translatelabels']['pid'],
                         $translatedLabelRecord->getUid()
                     ),
-                    303
+                    307
                 );
             } else {
                 // translation record in default language exists and localization exists also, so let's
@@ -133,7 +133,7 @@ class CreateLabelResolver implements MiddlewareInterface
                         $queryParams['tx_translatelabels']['pid'],
                         $translatedLabelRecord->getUid()
                     ),
-                    303
+                    307
                 );
             }
         }
