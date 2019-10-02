@@ -44,7 +44,8 @@ The development and the public-releases of this package is generously sponsored 
 
 ## Supported TYPO3 Versions
 
-* Currently only version 9.5 is supported.
+* Version 1.x of this extension supports TYPO3 9.5.
+* Version 2.x of this extension supports TYPO3 10.1.
 
 ## How to install
 
@@ -83,9 +84,13 @@ records.
 ## TYPO3 patch needed (bug #87038) 
 
 Due to the not yet fixed bug https://forge.typo3.org/issues/87038 in 
-TYPO3 9.5.9 you have to apply a patch to your TYPO3 sources.
+TYPO3 9.5.9 and TYPO3 10.1 you have to apply a patch to your TYPO3 sources at present.
 
-Use the latest patch set for TYPO3 9.5 attached to the issue.
+Use the latest patch set for your TYPO3 version attached to the issue.
+
+Alternatively you can use a patch included in this extension for convenience.
+
+[Quick guide to apply the patch](Documentation/Typo3Patch.md)
 
 [Instructions for applying a patch to the TYPO3 sources (german)](https://techblog.sitegeist.de/typo3-version-9-core-patches-mit-composer-verwalten/)
 
