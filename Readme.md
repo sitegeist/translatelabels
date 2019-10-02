@@ -93,6 +93,13 @@ Without this patch TYPO3 is not able to create translations of
 label records having the same key as their related record in the
 default language.
 
+## Change Log
+
+| translatelabels | TYPO3 | Changes |
+| --------------- | ----- | --------|
+| 1.0.x           | 9.5.x | Initial release       |
+| 1.1.x           | 9.5.x | Removed LLL:EXT: prefix from label keys  |
+
 ## How to activate for BE users
 
 1. [Enable admin panel for BE users.](https://docs.typo3.org/m/typo3/reference-tsconfig/9.5/en-us/UserTsconfig/AdmPanel.html)
