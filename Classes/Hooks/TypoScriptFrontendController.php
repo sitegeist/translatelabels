@@ -63,7 +63,7 @@ class TypoScriptFrontendController
                             'key' => $matches[2][$i],
                             'identifier' => $this->getIdentifier($matches[2][$i]),
                             'file' => $this->getFilePart($matches[2][$i]),
-                            'value' => $matches[1][$i],
+                            'value' => html_entity_decode($matches[1][$i]),
                             'overrides' => $this->getOverrides(
                                 $sysFolderWithTranslationsUid,
                                 $matches[2][$i],
@@ -99,20 +99,53 @@ class TypoScriptFrontendController
                 $ref->content
             );
 
-            // (?<=") means: positive Lookbehind assertion to find attribute values, f.e. alt-tags
+            // (?<=") means: positive Lookbehind assertion to find attribute values, f.e. alt-tags: <img alt="LLL:(...)" />
             // replace label in tag attributes
-            $search = '/(?<=")LLL:\(' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . '\)/si';
+//            $search = '/([^"]+)\s*=\s*"LLL:\(' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . '\)"/si';
+//            $message = $ref->sL('LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:tooltip.message');
+//            $ref->content = preg_replace_callback(
+//                $search,
+//                function ($matches) use ($sysFolderWithTranslationsUid, $message) {
+//                    $uri = $this->getLinkToBE($sysFolderWithTranslationsUid, $matches[3], $matches[2]);
+//                    return $this->renderLabelAsTooltipInsideTags(
+//                        $matches[1], // name of attribute, f.e. 'alt' or 'value'
+//                        $matches[3], // key
+//                        $matches[2], // translation string
+//                        $uri,
+//                        $message
+//                    );
+//                },
+//                $ref->content
+//            );
+            // seach for all tags with at least one LLL marker and add a data attribute 'data-translatelabel-attributes' with a json array with translations for each attribute containing a LLL: marker
+            $search = '/(<.*?)(LLL:\(' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . '\))(.*?)(\/?>)/si';
             $message = $ref->sL('LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:tooltip.message');
             $ref->content = preg_replace_callback(
                 $search,
-                function ($matches) use ($sysFolderWithTranslationsUid, $message) {
-                    $uri = $this->getLinkToBE($sysFolderWithTranslationsUid, $matches[2], $matches[1]);
-                    return $this->renderLabelAsTooltipInsideTags(
-                        $matches[2], // key
-                        $matches[1], // translation string
-                        $uri,
-                        $message
+                // iterate through each tag containing at least one LLL marker, f.e. '<img/>'
+                function ($matches) use ($sysFolderWithTranslationsUid, $message, $quote) {
+                    $search = '/([\w-]+)\s*=\s*"LLL:\(' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . '\)"/si';
+                    $attributesToTranslate = [];
+                    // iterate trough each attribute containing a LLL marker, f.e. 'alt', 'placeholder'
+                    $innerContent = preg_replace_callback(
+                        $search,
+                        function ($matches) use ($message, &$attributesToTranslate) {
+                            $attributesToTranslate[] = [
+                                'attribute' => trim($matches[1]),
+                                'key' => trim($matches[3]),
+                                'identifier' => $this->getIdentifier(trim($matches[3])),
+                                'translation' => $matches[2]
+                            ];
+                            return $this->renderLabelAsTooltipInsideTags(
+                                $matches[1], // name of attribute, f.e. 'alt' or 'value'
+                                $matches[3], // key
+                                $matches[2], // translation string
+                                $message
+                            );
+                        },
+                        $matches[1] . $matches[2] . $matches[3]
                     );
+                    return $innerContent . ' data-translatelabels-role="translations-in-attributes" data-translatelabel-attributes="' . htmlentities(json_encode($attributesToTranslate)) . '" ' . $matches[4];
                 },
                 $ref->content
             );
@@ -144,9 +177,9 @@ class TypoScriptFrontendController
             . '</span>';
     }
 
-    protected function renderLabelAsTooltipInsideTags($key, $translationString, $uri, string $message = 'Translate label \'%s\'...', $target = 'backend')
+    protected function renderLabelAsTooltipInsideTags($attributeName, $key, $translationString, string $message = 'Translate label \'%s\'...')
     {
-        return $translationString . ' (LABEL: ' . htmlspecialchars( $this->getIdentifier($key)) . ')" data-translatelabel-role="tooltip" data-translatelabel-key="' . htmlspecialchars($key) . '"';
+        return $attributeName . '="' . $translationString . ' (LABEL: ' . htmlentities( $this->getIdentifier($key)) . ')"';
     }
 
     /**
