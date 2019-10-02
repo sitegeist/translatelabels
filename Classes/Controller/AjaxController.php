@@ -22,6 +22,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Lang\LanguageService;
 
 /**
@@ -109,7 +110,7 @@ class AjaxController
                     if ($translationInDefaultLanguage === false) {
                         // create l10n_parent, fetch translation from language file
                         $uidOfTranslationInDefaultLanguage = $this->insertTranslation([
-                            'translation' => html_entity_decode($data->currentTranslation),
+                            'translation' => $this->getTranslationFromDefaultLanguage($data->key),
                             'labelkey' => $data->key,
                             'pid' => $data->storagePid,
                             'sys_language_uid' => 0,
@@ -144,6 +145,21 @@ class AjaxController
         }
     }
 
+    protected function getTranslationFromDefaultLanguage($translationKey)
+    {
+        if (strpos($translationKey, 'LLL:EXT:') !== 0) {
+            $translationKey = 'LLL:EXT:' . $translationKey;
+        }
+
+        $translationInDefaultLanguage = LocalizationUtility::translate(
+            $translationKey,
+            null,
+            null,
+            'default'
+        );
+
+        return $translationInDefaultLanguage;
+    }
     /**
      * Returns the current BE user.
      *
