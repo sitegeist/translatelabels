@@ -196,7 +196,7 @@ class TranslationLabelUtility
             // $extendedLabelKey = 'LLL:EXT:' . self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
             $extendedLabelKey = self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
         }
-        return $extendedLabelKey;
+        return self::getLabelKeyWithoutPrefixes($extendedLabelKey);
     }
 
     public static function getLabelKeyWithoutPrefixes($labelKey)
