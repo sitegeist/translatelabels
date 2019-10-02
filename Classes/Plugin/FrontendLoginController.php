@@ -82,7 +82,7 @@ class FrontendLoginController extends \TYPO3\CMS\Felogin\Controller\FrontendLogi
     public function pi_getLL($key, $alternativeLabel = '') // phpcs:disable
     {
         $label = parent::pi_getLL($key, $alternativeLabel);
-        $id =  $this->languageFilePath . ':' . $key;
+        $id =  TranslationLabelUtility::getLabelKeyWithoutPrefixes($this->languageFilePath . ':' . $key);
 
         $label = TranslationLabelUtility::readLabelFromDatabase($id, $label);
         if (TranslationLabelUtility::isFrontendWithLoggedInBEUser($id)) {

@@ -20,9 +20,10 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Lang\LanguageService;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Admin Panel Ajax Controller - Route endpoint for ajax actions
@@ -99,7 +100,7 @@ class AjaxController
             if ($translation !== false) {
                 if ($translation['translation'] !== $data->value) {
                     // translation exists
-                    $this->updateTranslation($translation['uid'], $data->value);
+                    $this->updateTranslation($translation['uid'], html_entity_decode($data->value));
                     return new JsonResponse([ 'status' => 'ok', 'message' => $successMessage, 'action' => 'changed', 'uid' => $translation['uid'] ]);
                 }
             } else {
@@ -109,7 +110,7 @@ class AjaxController
                     if ($translationInDefaultLanguage === false) {
                         // create l10n_parent, fetch translation from language file
                         $uidOfTranslationInDefaultLanguage = $this->insertTranslation([
-                            'translation' => $data->currentTranslation,
+                            'translation' => $this->getTranslationFromDefaultLanguage($data->key),
                             'labelkey' => $data->key,
                             'pid' => $data->storagePid,
                             'sys_language_uid' => 0,
@@ -124,7 +125,7 @@ class AjaxController
                 }
                 // create translation related to l10n_parent
                 $this->insertTranslation([
-                    'translation' => $data->value,
+                    'translation' => html_entity_decode($data->value),
                     'labelkey' => $data->key,
                     'pid' => $data->storagePid,
                     'sys_language_uid' => $data->sysLanguageUid,
@@ -144,6 +145,21 @@ class AjaxController
         }
     }
 
+    protected function getTranslationFromDefaultLanguage($translationKey)
+    {
+        if (strpos($translationKey, 'LLL:EXT:') !== 0) {
+            $translationKey = 'LLL:EXT:' . $translationKey;
+        }
+
+        $translationInDefaultLanguage = LocalizationUtility::translate(
+            $translationKey,
+            null,
+            null,
+            'default'
+        );
+
+        return $translationInDefaultLanguage;
+    }
     /**
      * Returns the current BE user.
      *

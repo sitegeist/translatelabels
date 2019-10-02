@@ -1,0 +1,38 @@
+diff --git a/typo3/sysext/core/Classes/DataHandling/DataHandler.php b/typo3/sysext/core/Classes/DataHandling/DataHandler.php
+index 6fe38a1..5c580ae 100644
+--- a/typo3/sysext/core/Classes/DataHandling/DataHandler.php
++++ b/typo3/sysext/core/Classes/DataHandling/DataHandler.php
+@@ -2396,6 +2396,26 @@
+                 $queryBuilder->expr()->eq($field, $queryBuilder->createPositionalParameter($value, \PDO::PARAM_STR)),
+                 $queryBuilder->expr()->neq('uid', $queryBuilder->createPositionalParameter($uid, \PDO::PARAM_INT))
+             );
++        // ignore translations of current record if field is configured with l10n_mode = "exclude"
++        if ($GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'] ?? '' === 'exclude'
++            && $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'] ?? '' !== ''
++            && $GLOBALS['TCA'][$table]['columns'][$field]['languageField'] ?? '' !== '') {
++            $queryBuilder
++                ->andWhere(
++                    $queryBuilder->expr()->orX(
++                    // records without l10n_parent must be taken into account (in any language)
++                        $queryBuilder->expr()->eq(
++                            $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'],
++                            $queryBuilder->createPositionalParameter(0, \PDO::PARAM_INT)
++                        ),
++                        // translations of other records must be taken into account
++                        $queryBuilder->expr()->neq(
++                            $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'],
++                            $queryBuilder->createPositionalParameter($uid, \PDO::PARAM_INT)
++                        )
++                    )
++                );
++        }
+         if ($pid !== 0) {
+             $queryBuilder->andWhere(
+                 $queryBuilder->expr()->eq('pid', $queryBuilder->createPositionalParameter($pid, \PDO::PARAM_INT))
+@@ -2406,7 +2426,6 @@
+                 $queryBuilder->expr()->gte('pid', $queryBuilder->createPositionalParameter(0, \PDO::PARAM_INT))
+             );
+         }
+-
+         return $queryBuilder->execute();
+     }

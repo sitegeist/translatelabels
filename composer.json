@@ -2,7 +2,7 @@
     "name": "sitegeist/translatelabels",
     "type": "typo3-cms-extension",
     "description": "",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "license": ["GPL-2.0-or-later"],
     "authors": [
         {
@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "typo3/cms-core": "^9.5.0"
+        "typo3/cms-core": "^10.0.0 || ^10.1.0"
     },
     "autoload": {
         "psr-4": {

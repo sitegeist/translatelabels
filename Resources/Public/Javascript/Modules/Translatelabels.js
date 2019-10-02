@@ -111,20 +111,61 @@
           interactive: true,
           allowHTML: true,
           followCursor: true,
-          content: tooltipContent
+          content: tooltipContent,
+          maxWidth: 500
         });
       }
     });
   }
 
+  function decodeHtmlSpecialChars(encodedStr)
+  {
+    var parser = new DOMParser;
+    var dom = parser.parseFromString(
+      '<!doctype html><body>' + encodedStr,
+      'text/html');
+    return dom.body.textContent;
+  }
+
   function updateTranslations(translationKey, newTranslation)
   {
+    newTranslation = decodeHtmlSpecialChars(newTranslation);
+
+    // update translations outside of tags
     var elements = Array.from(
       document.querySelectorAll('[data-translatelabels-role="translation"][data-translatelabels-key="' + translationKey + '"]')
     );
-    console.log(translationKey, newTranslation,elements);
     elements.forEach(function (elem) {
       elem.innerHTML = newTranslation;
+    });
+
+    // update translations in attributes inside of tags
+    var elementsWithTranslatableAttributes = Array.from(
+      document.querySelectorAll('[data-translatelabels-role="translations-in-attributes"]')
+    );
+
+    elementsWithTranslatableAttributes.forEach(function (elem) {
+      var attributes = JSON.parse(elem.dataset.translatelabelAttributes);
+      attributes.forEach(function (attribute) {
+        if(attribute.key === translationKey) {
+          var translationWithPostfix = newTranslation + " (LABEL: " + attribute.identifier + ")";
+          switch(attribute.attribute) {
+            case 'value':
+              elem.value = translationWithPostfix;
+              break;
+            case 'placeholder':
+              elem.placeholder = translationWithPostfix;
+              break;
+            default:
+              try {
+                elem.setAttribute(attribute.attribute, translationWithPostfix);
+              }
+              catch(error) {
+                console.log(error);
+              }
+          }
+        }
+      });
     });
   }
 

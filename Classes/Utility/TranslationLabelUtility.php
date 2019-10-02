@@ -11,8 +11,10 @@ namespace Sitegeist\Translatelabels\Utility;
  *
  */
 
+use Psr\Http\Message\ServerRequestInterface;
 use Sitegeist\Translatelabels\Domain\Model\Translation;
 use TYPO3\CMS\Backend\Exception;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -149,6 +151,8 @@ class TranslationLabelUtility
     {
         $showTranslationLabels = false;
 
+        /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? ServerRequestFactory::fromGlobals();
         $context = GeneralUtility::makeInstance(Context::class);
         $isLoggedIn = $context->getPropertyFromAspect('backend.user', 'id');
         if ($isLoggedIn) {
@@ -166,7 +170,8 @@ class TranslationLabelUtility
             // only for uncached pages as no_cache is set by admin panel
             // otherwise we could generate LLL tags into cached pages and will not replace them
             // in FE if no BE user is logged-in.
-            && $GLOBALS['TSFE']->no_cache === true);
+            && $request->getAttribute('noCache') === true
+        );
     }
 
     /**
@@ -188,8 +193,18 @@ class TranslationLabelUtility
         $languageFile = strrev($reversedParts[1]);
         $extendedLabelKey = $labelKey;
         if ($languageFile === '') {
-            $extendedLabelKey = 'LLL:EXT:' . self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
+            // $extendedLabelKey = 'LLL:EXT:' . self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
+            $extendedLabelKey = self::getDefaultLanguageFile($extensionName) . ':' . $labelKey;
         }
         return $extendedLabelKey;
+    }
+
+    public static function getLabelKeyWithoutPrefixes($labelKey)
+    {
+        // remove leading 'LLL:'
+        $labelKey = (strpos($labelKey,'LLL:') === 0) ? substr($labelKey, 4) : $labelKey;
+        // remove leading 'EXT:'
+        $labelKey = (strpos($labelKey, 'EXT:') === 0) ? substr($labelKey, 4) : $labelKey;
+        return $labelKey;
     }
 }
