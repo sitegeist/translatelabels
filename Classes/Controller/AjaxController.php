@@ -99,7 +99,7 @@ class AjaxController
             if ($translation !== false) {
                 if ($translation['translation'] !== $data->value) {
                     // translation exists
-                    $this->updateTranslation($translation['uid'], $data->value);
+                    $this->updateTranslation($translation['uid'], html_entity_decode($data->value));
                     return new JsonResponse([ 'status' => 'ok', 'message' => $successMessage, 'action' => 'changed', 'uid' => $translation['uid'] ]);
                 }
             } else {
@@ -109,7 +109,7 @@ class AjaxController
                     if ($translationInDefaultLanguage === false) {
                         // create l10n_parent, fetch translation from language file
                         $uidOfTranslationInDefaultLanguage = $this->insertTranslation([
-                            'translation' => $data->currentTranslation,
+                            'translation' => html_entity_decode($data->currentTranslation),
                             'labelkey' => $data->key,
                             'pid' => $data->storagePid,
                             'sys_language_uid' => 0,
@@ -124,7 +124,7 @@ class AjaxController
                 }
                 // create translation related to l10n_parent
                 $this->insertTranslation([
-                    'translation' => $data->value,
+                    'translation' => html_entity_decode($data->value),
                     'labelkey' => $data->key,
                     'pid' => $data->storagePid,
                     'sys_language_uid' => $data->sysLanguageUid,
