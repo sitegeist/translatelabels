@@ -164,7 +164,7 @@ class TranslationLabelUtility
         }
         return ($isLoggedIn !== 0
             && TYPO3_MODE === 'FE'
-            && strpos($labelKey, 'LLL:EXT:adminpanel') !== 0
+            && strpos($labelKey, 'adminpanel') !== 0
             && $extensionName !== 'adminpanel'
             && $showTranslationLabels === '1'
             // only for uncached pages as no_cache is set by admin panel
