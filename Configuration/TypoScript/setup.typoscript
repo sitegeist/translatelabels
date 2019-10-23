@@ -1,5 +1,3 @@
 plugin.tx_translatelabels.settings {
     storagePid = {$plugin.tx_translatelabels.settings.storagePid}
 }
-
-module.tx_translatelabels.settings < plugin.tx_translatelabels.settings
