@@ -52,10 +52,14 @@ The development and the public-releases of this package is generously sponsored 
 - Install the extension and activate it in Extension Manager or via
 composer:
 
-```
-composer require sitegeist/translatelabels
-```
-
+  - For TYPO3 9.5:
+    ```
+    composer require sitegeist/translatelabels:^1
+    ```
+  - For TYPO3 10.0 and 10.1:
+    ```
+    composer require sitegeist/translatelabels
+    ```
 - Then go to the backend extension manager and load the extension
 in "Installed Extensions".
 - Update your database with BE module "Maintenance/Analyze Database Structure".

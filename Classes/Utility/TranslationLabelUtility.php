@@ -26,23 +26,21 @@ class TranslationLabelUtility
 {
     /**
      * returns storagePid where to store translation records
-
-     * @return int | null
+     *
+     * @return null
      * @throws Exception
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public static function getStoragePid()
     {
-        // TYPOSCRIPT setup is only defined if page is uncached and TYPO_MODE === 'FE'
-        $storagePid = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_translatelabels.']['settings.']['storagePid'] ?? null;
+        // TYPOSCRIPT setup is only defined in TSFE if page is uncached and TYPO_MODE === 'FE'
+        // so let us use BackendConfigurationManger instead of $GLOBALS['TSFE'] as this works also in FE
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $configurationManager = $objectManager->get(BackendConfigurationManager::class);
+        $configuration = $configurationManager->getTypoScriptSetup();
+        $storagePid = $configuration['plugin.']['tx_translatelabels.']['settings.']['storagePid'] ?? null;
         if ($storagePid === null) {
-            // this is an edge case if page is cached but admin panel is active
-            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-            $configurationManager = $objectManager->get(BackendConfigurationManager::class);
-            $configuration = $configurationManager->getConfiguration('translatelabels');
-            $storagePid = $configuration['settings']['storagePid'];
-            if ($storagePid === null) {
-                throw new Exception('Missing TYPOSCRIPT: plugin.tx_translatelabels.settings.storagePid not defined.', 1567012007);
-            }
+            throw new Exception('Missing TYPOSCRIPT: plugin.tx_translatelabels.settings.storagePid not defined.', 1567012007);
         }
         return $storagePid;
     }
@@ -53,6 +51,7 @@ class TranslationLabelUtility
      *                                     (will be used if no record is found)
      * @return string                      new translation, maybe overridden from translation record if defined
      * @throws Exception
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public static function readLabelFromDatabase(string $labelKey, string $fallBackTranslation = null)
     {
@@ -69,12 +68,7 @@ class TranslationLabelUtility
      * @param int | null $languageUid  uid of language of translation label, null means current language
 
      * @return object                  translation from database or null if it doesn't exist
-     */
-    /**
-     * @param string $labelKey
-     * @param int $pid
-     * @param int|null $languageUid
-     * @return object
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public static function getLabelFromDatabase(string $labelKey, int $pid, int $languageUid = null)
     {
@@ -92,8 +86,9 @@ class TranslationLabelUtility
     }
 
     /**
-     * @param string $labelKey
-     * @param int $translation
+     * @param $labelKey
+     * @param $translation
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
     public static function createLabel($labelKey, $translation)
