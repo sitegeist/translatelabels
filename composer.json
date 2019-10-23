@@ -23,7 +23,6 @@
         }
     },
     "replace": {
-        "translatelabels": "self.version",
         "typo3-ter/translatelabels": "self.version"
     }
 }

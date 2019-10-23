@@ -26,9 +26,10 @@ class TranslationLabelUtility
 {
     /**
      * returns storagePid where to store translation records
-
-     * @return int | null
+     *
+     * @return null
      * @throws Exception
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public static function getStoragePid()
     {
@@ -50,6 +51,7 @@ class TranslationLabelUtility
      *                                     (will be used if no record is found)
      * @return string                      new translation, maybe overridden from translation record if defined
      * @throws Exception
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public static function readLabelFromDatabase(string $labelKey, string $fallBackTranslation = null)
     {
@@ -66,12 +68,7 @@ class TranslationLabelUtility
      * @param int | null $languageUid  uid of language of translation label, null means current language
 
      * @return object                  translation from database or null if it doesn't exist
-     */
-    /**
-     * @param string $labelKey
-     * @param int $pid
-     * @param int|null $languageUid
-     * @return object
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public static function getLabelFromDatabase(string $labelKey, int $pid, int $languageUid = null)
     {
@@ -89,8 +86,9 @@ class TranslationLabelUtility
     }
 
     /**
-     * @param string $labelKey
-     * @param int $translation
+     * @param $labelKey
+     * @param $translation
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
     public static function createLabel($labelKey, $translation)
