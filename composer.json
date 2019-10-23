@@ -2,7 +2,6 @@
     "name": "sitegeist/translatelabels",
     "type": "typo3-cms-extension",
     "description": "",
-    "version": "1.1.1",
     "license": ["GPL-2.0-or-later"],
     "authors": [
         {
@@ -24,7 +23,6 @@
         }
     },
     "replace": {
-        "translatelabels": "self.version",
         "typo3-ter/translatelabels": "self.version"
     }
 }
