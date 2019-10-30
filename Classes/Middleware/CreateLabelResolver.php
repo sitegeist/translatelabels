@@ -71,7 +71,7 @@ class CreateLabelResolver implements MiddlewareInterface
                     null,
                     null,
                     'default'
-                );
+                ) ?: $queryParams['tx_translatelabels']['translation'];
                 $data['tx_translatelabels_domain_model_translation']['NEW_1'] = [
                     'pid' => $queryParams['tx_translatelabels']['pid'],
                     'sys_language_uid' => 0,
