@@ -109,8 +109,10 @@ class AjaxController
                     $translationInDefaultLanguage = $this->findTranslation($data->key, (int)$data->storagePid, 0);
                     if ($translationInDefaultLanguage === false) {
                         // create l10n_parent, fetch translation from language file
+                        // if no translation exists from language file then use printed translation from frontend
+                        $defaultTranslation = $this->getTranslationFromDefaultLanguage($data->key) ?: $data->currentTranslation;
                         $uidOfTranslationInDefaultLanguage = $this->insertTranslation([
-                            'translation' => $this->getTranslationFromDefaultLanguage($data->key),
+                            'translation' => $defaultTranslation,
                             'labelkey' => $data->key,
                             'pid' => $data->storagePid,
                             'sys_language_uid' => 0,

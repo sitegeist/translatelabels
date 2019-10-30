@@ -44,16 +44,22 @@ The development and the public-releases of this package is generously sponsored 
 
 ## Supported TYPO3 Versions
 
-* Currently only version 9.5 is supported.
+* Version 1.x of this extension supports TYPO3 9.5.
+* Version 2.x of this extension supports TYPO3 10.1.
 
 ## How to install
 
 - Install the extension and activate it in Extension Manager or via
 composer:
 
-```
-composer require sitegeist/translatelabels
-```
+  - For TYPO3 9.5:
+    ```
+    composer require sitegeist/translatelabels:^1
+    ```
+  - For TYPO3 10.0 and 10.1:
+    ```
+    composer require sitegeist/translatelabels
+    ```
 
 - Then go to the backend extension manager and load the extension
 in "Installed Extensions".
