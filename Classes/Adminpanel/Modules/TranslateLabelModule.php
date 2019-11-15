@@ -67,6 +67,15 @@ class TranslateLabelModule extends AbstractModule implements InitializableInterf
         $this->config = [
             'showTranslationLabels' => (bool)$this->configurationService->getConfigurationOption('translatelabels', 'showTranslationLabels')
         ];
+
+        // force parsing of TYPOSCRIPT template to get plugin.tx_translatelabels.settings.storagePid
+        // fixes #1567012007 TYPO3\CMS\Backend\Exception
+        // Missing TYPOSCRIPT: plugin.tx_translatelabels.settings.storagePid not defined.
+        // on cached pages with closed admin panel which is clicked to open it. (setting 'show translate labels' is off)
+        // needed in public/typo3conf/ext/translatelabels/Classes/Utility/TranslationLabelUtility.php:36
+        // to read settings from TYPOSCRIPT also if page is cached
+        $GLOBALS['TSFE']->forceTemplateParsing = true;
+
         if ($this->config['showTranslationLabels']) {
             // forcibly unset fluid caching as it does not care about the tsfe based caching settings
             // pages must not be cached because otherwise the LLL(...) tags are cached and displayed for end users

@@ -31,11 +31,9 @@ class TranslationLabelUtility
     public static function getStoragePid()
     {
         // TYPOSCRIPT setup is only defined in TSFE if page is uncached and TYPO_MODE === 'FE'
-        // so let us use BackendConfigurationManger instead of $GLOBALS['TSFE'] as this works also in FE
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $configurationManager = $objectManager->get(BackendConfigurationManager::class);
-        $configuration = $configurationManager->getTypoScriptSetup();
-        $storagePid = $configuration['plugin.']['tx_translatelabels.']['settings.']['storagePid'] ?? null;
+        // @see public/typo3conf/ext/translatelabels/Classes/Adminpanel/Modules/TranslateLabelModule.php:77
+        // to enforce parsing of TYPOSCRIPT setting $GLOBALS['TSFE']->forceTemplateParsing = true;
+        $storagePid = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_translatelabels.']['settings.']['storagePid'] ?? null;
         if ($storagePid === null) {
             throw new Exception('Missing TYPOSCRIPT: plugin.tx_translatelabels.settings.storagePid not defined.', 1567012007);
         }
