@@ -15,10 +15,13 @@ namespace Sitegeist\Translatelabels\Adminpanel\Modules;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\AbstractModule;
 use TYPO3\CMS\Adminpanel\ModuleApi\ConfigurableInterface;
+use TYPO3\CMS\Adminpanel\ModuleApi\InitializableInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\RequestEnricherInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\ResourceProviderInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\ShortInfoProviderInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\PageSettingsProviderInterface;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\TypoScriptAspect;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
@@ -64,6 +67,14 @@ class TranslateLabelModule extends AbstractModule implements ShortInfoProviderIn
      */
     public function enrich(ServerRequestInterface $request): ServerRequestInterface
     {
+        // force parsing of TYPOSCRIPT template to get plugin.tx_translatelabels.settings.storagePid
+        // fixes #1567012007 TYPO3\CMS\Backend\Exception
+        // Missing TYPOSCRIPT: plugin.tx_translatelabels.settings.storagePid not defined.
+        // on cached pages with closed admin panel which is clicked to open it. (setting 'show translate labels' is off)
+        // needed in typo3conf/ext/translatelabels/Classes/Utility/TranslationLabelUtility.php:39
+        // to read settings from TYPOSCRIPT also if page is cached
+        GeneralUtility::makeInstance(Context::class)->setAspect('typoscript', GeneralUtility::makeInstance(TypoScriptAspect::class, true));
+
         if ((bool)$this->configurationService->getConfigurationOption('translatelabels', 'showTranslationLabels')) {
             $request = $request->withAttribute('noCache', true);
         }
