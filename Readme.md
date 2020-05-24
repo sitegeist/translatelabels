@@ -85,23 +85,6 @@ Be aware that this setting has to be defined for all pages using
 this extension and also for all sysfolders containing the translation
 records.
 
-## TYPO3 patch needed (bug #87038) 
-
-Due to the not yet fixed bug https://forge.typo3.org/issues/87038 in 
-TYPO3 9.5.9 and TYPO3 10.1 you have to apply a patch to your TYPO3 sources at present.
-
-Use the latest patch set for your TYPO3 version attached to the issue.
-
-Alternatively you can use a patch included in this extension for convenience.
-
-[Quick guide to apply the patch](Documentation/Typo3Patch.md)
-
-[Instructions for applying a patch to the TYPO3 sources (german)](https://techblog.sitegeist.de/typo3-version-9-core-patches-mit-composer-verwalten/)
-
-Without this patch TYPO3 is not able to create translations of
-label records having the same key as their related record in the
-default language.
-
 ## Change Log
 
 | translatelabels | TYPO3  | Changes |
