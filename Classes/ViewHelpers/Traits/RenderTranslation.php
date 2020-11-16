@@ -38,19 +38,19 @@ trait RenderTranslation
             // language files in chain of form framework are without LLL:, all others use this prefix
             // $id = (strpos($translationKey, 'LLL:') === 0) ? $translationKey : 'LLL:' . $translationKey;
             $id = TranslationLabelUtility::getLabelKeyWithoutPrefixes($translationKey);
-            $value = TranslationLabelUtility::readLabelFromDatabase($id, $value);
+            $value = TranslationLabelUtility::readLabelFromDatabase($id, (string)$value);
             if (\is_array($translateArguments) && count($translateArguments) > 0 && $value !== null) {
                 $value = sprintf($value, ...array_values($translateArguments)) ?: sprintf(
                     'Error: could not translate key "%s" with value "%s" and %d argument(s)!',
                     $translationKey,
-                    (string)$value,
+                    $value,
                     count($translateArguments)
                 );
             }
             if (TranslationLabelUtility::isFrontendWithLoggedInBEUser($id)) {
                 $value = TranslationLabelUtility::renderTranslationWithExtendedInformation(
                     $id,
-                    (string)$value,
+                    $value,
                     'form',
                     $translateArguments
                 );
