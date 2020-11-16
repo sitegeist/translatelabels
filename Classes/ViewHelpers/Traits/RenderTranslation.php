@@ -31,7 +31,7 @@ trait RenderTranslation
         return $array;
     }
 
-    public static function renderTranslation(string $translationKey, string $value, array $translateArguments)
+    public static function renderTranslation(string $translationKey, $value, array $translateArguments)
     {
 
         if (TYPO3_MODE === 'FE' && $value !== '') {
@@ -43,14 +43,14 @@ trait RenderTranslation
                 $value = sprintf($value, ...array_values($translateArguments)) ?: sprintf(
                     'Error: could not translate key "%s" with value "%s" and %d argument(s)!',
                     $translationKey,
-                    $value,
+                    (string)$value,
                     count($translateArguments)
                 );
             }
             if (TranslationLabelUtility::isFrontendWithLoggedInBEUser($id)) {
                 $value = TranslationLabelUtility::renderTranslationWithExtendedInformation(
                     $id,
-                    $value,
+                    (string)$value,
                     'form',
                     $translateArguments
                 );
