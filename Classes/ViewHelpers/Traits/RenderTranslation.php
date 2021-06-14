@@ -65,7 +65,7 @@ trait RenderTranslation
         $formRuntime = $renderingContext
             ->getViewHelperVariableContainer()
             ->get(RenderRenderableViewHelper::class, 'formRuntime');
-        $languageFiles = $formRuntime->getRenderingOptions()['translation']['translationFile'];
+        $languageFiles = $formRuntime->getRenderingOptions()['translation']['translationFiles'];
         if (\is_string($languageFiles)) {
             $highestOrderLanguageFile = $languageFiles;
         } else {
