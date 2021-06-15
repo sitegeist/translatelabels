@@ -268,7 +268,7 @@ class TypoScriptFrontendController
 
     /**
      * Generates link to edit translation records in backend
-     * Works in conjunction with Sitegeist\TranslateLabels\Middleware\CreateLabelResolver which
+     * Works in conjunction with Sitegeist\Translatelabels\Middleware\CreateLabelResolver which
      * does some magic to automatically create missing translations records in default language and prepares
      * localizations
      *
