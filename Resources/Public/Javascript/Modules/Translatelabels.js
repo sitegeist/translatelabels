@@ -91,9 +91,8 @@
     // focus after last char of editable field
     var s = window.getSelection(),
       r = document.createRange();
-    // r.selectNodeContents(editField); // select all text
-    r.setStart(editField.firstChild, editField.innerHTML.length);
-    r.setEnd(editField.firstChild, editField.innerHTML.length);
+    r.setStart(editField.firstChild, 0);
+    r.setEnd(editField.lastChild, editField.lastChild.length);
     s.removeAllRanges();
     s.addRange(r);
   }

@@ -18,8 +18,8 @@
                     </td>
                     <td style="width:50%; padding-right:10px;">
                         <div>
-                            <div class="orig-translation" style="display: none">{label.value}</div>
-                            <div class="editable" contenteditable="true" style="padding: 5px">{label.value}</div>
+                            <div class="orig-translation" style="display: none"><f:format.raw>{label.value}</f:format.raw></div>
+                            <div class="editable" contenteditable="true" style="padding: 5px"><f:format.raw>{label.value}</f:format.raw></div>
                             <f:form.button class="typo3-adminPanel-btn typo3-adminPanel-btn-default" data="{'typo3-ajax-url': saveUrl, 'typo3-role': 'translateButton', 'typo3-key': label.key, 'typo3-sysLanguageUid': sysLanguageUid, 'typo3-storagePid' : storagePid}" type="button" style="display: none">
                                 {f:translate(key:'LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:button.translate', extensionName: 'adminpanel')}
                             </f:form.button>
