@@ -206,13 +206,13 @@ class TranslationLabelUtility
     }
 
     /**
-     * replaces all html tags from $content and replaces <br>, <br />, <br/> with newline
+     * replaces all html tags from $content and replaces <br>, <br />, <br/>, <div> with newline
      *
      * @param $content
      * @return string
      */
     public static function stripAllTagsButNewlines($content)
     {
-        return (strip_tags(str_replace(['<br>', '<br/>', '<br />'], ["\n", "\n", "\n"], $content)));
+        return (strip_tags(str_replace(["<br/>\n", "<br />\n", "<br>\n",'<div>'], ["\n", "\n", "\n", "\n"], $content)));
     }
 }
