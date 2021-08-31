@@ -192,6 +192,10 @@ class TranslationLabelUtility
         return self::getLabelKeyWithoutPrefixes($extendedLabelKey);
     }
 
+    /**
+     * @param $labelKey
+     * @return false|mixed|string
+     */
     public static function getLabelKeyWithoutPrefixes($labelKey)
     {
         // remove leading 'LLL:'
@@ -199,5 +203,16 @@ class TranslationLabelUtility
         // remove leading 'EXT:'
         $labelKey = (strpos($labelKey, 'EXT:') === 0) ? substr($labelKey, 4) : $labelKey;
         return $labelKey;
+    }
+
+    /**
+     * replaces all html tags from $content and replaces <br>, <br />, <br/>, <div> with newline
+     *
+     * @param $content
+     * @return string
+     */
+    public static function stripAllTagsButNewlines($content)
+    {
+        return (strip_tags(str_replace(["<br/>\n", "<br />\n", "<br>\n",'<div>'], ["\n", "\n", "\n", "\n"], $content)));
     }
 }

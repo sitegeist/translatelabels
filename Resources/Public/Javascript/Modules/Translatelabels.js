@@ -91,9 +91,8 @@
     // focus after last char of editable field
     var s = window.getSelection(),
       r = document.createRange();
-    // r.selectNodeContents(editField); // select all text
-    r.setStart(editField.firstChild, editField.innerHTML.length);
-    r.setEnd(editField.firstChild, editField.innerHTML.length);
+    r.setStart(editField.firstChild, 0);
+    r.setEnd(editField.lastChild, editField.lastChild.length);
     s.removeAllRanges();
     s.addRange(r);
   }
@@ -120,11 +119,16 @@
 
   function decodeHtmlSpecialChars(encodedStr)
   {
+    // encode <br> and <div> tags to preserve them after removing all other html tags
+    // entering newline during inline editing sometimes results in <br>, sometimes in <div></div>
+    encodedStr = encodedStr.replaceAll('<br>', '&lt;br&gt;');
+    encodedStr = encodedStr.replaceAll('<div>', '&lt;br&gt;<div>');
     var parser = new DOMParser;
     var dom = parser.parseFromString(
       '<!doctype html><body>' + encodedStr,
       'text/html');
-    return dom.body.textContent;
+    var parsedStrWithPreservedBrTags = dom.body.textContent.replace('&lt;br&gt;', '<br>');
+    return parsedStrWithPreservedBrTags;
   }
 
   function updateTranslations(translationKey, newTranslation)

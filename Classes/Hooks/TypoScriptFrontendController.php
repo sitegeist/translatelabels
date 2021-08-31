@@ -42,6 +42,8 @@ class TypoScriptFrontendController
         array &$params,
         \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $ref
     ) {
+        // ini_set("pcre.backtrack_limit", "-1");
+
         // single quote ' is escaped in fluid inside of tag attributes to &#039;
         // so we have to look out for single quotes as either ' or &#039;
         // a regex group starting with (?: instead of ( is a non-capturing group
@@ -81,44 +83,36 @@ class TypoScriptFrontendController
                     $keys[] = $matches[2][$i];
                 }
             }
-            // (?<!=") means: negative Lookbehind assertion to exclude attribute values, f.e. alt-tags
-            // don't replace label in tag attributes, only outside of html tags
-            $search = '/(?<!=")LLL:\(' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . '\)/si';
+            // step 1
+            // replace labels outside of html tags only but not inside tag attributes
+            // find <div>...LLL:...</div> but not <div data="...LLL:..."></div>
+
+            // (?![^<]*>) at the end of this regex means negative lookahead for a closing >
+            // with optional characters before
+            $search = '/(LLL:\(' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . '\))(?![^<]*>)/i';
             $message = $ref->sL('LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:tooltip.message');
             $ref->content = preg_replace_callback(
                 $search,
                 function ($matches) use ($sysFolderWithTranslationsUid, $message) {
-                    $uri = $this->getLinkToBE($sysFolderWithTranslationsUid, $matches[2], $matches[1]);
+                    $uri = $this->getLinkToBE($sysFolderWithTranslationsUid, $matches[3], $matches[2]);
                     return $this->renderLabelAsTooltip(
-                        $matches[2], // key
-                        $matches[1], // translation string
+                        $matches[3], // key
+                        $matches[2], // translation string
                         $uri,
                         $message
                     );
                 },
                 $ref->content
             );
+            if($ref->content === null) {
+                throw new \Sitegeist\Translatelabels\Exception(preg_last_error_msg(), preg_last_error());
+            }
 
-            // (?<=") means: positive Lookbehind assertion to find attribute values, f.e. alt-tags: <img alt="LLL:(...)" />
-            // replace label in tag attributes
-//            $search = '/([^"]+)\s*=\s*"LLL:\(' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . '\)"/si';
-//            $message = $ref->sL('LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:tooltip.message');
-//            $ref->content = preg_replace_callback(
-//                $search,
-//                function ($matches) use ($sysFolderWithTranslationsUid, $message) {
-//                    $uri = $this->getLinkToBE($sysFolderWithTranslationsUid, $matches[3], $matches[2]);
-//                    return $this->renderLabelAsTooltipInsideTags(
-//                        $matches[1], // name of attribute, f.e. 'alt' or 'value'
-//                        $matches[3], // key
-//                        $matches[2], // translation string
-//                        $uri,
-//                        $message
-//                    );
-//                },
-//                $ref->content
-//            );
-            // seach for all tags with at least one LLL marker and add a data attribute 'data-translatelabel-attributes' with a json array with translations for each attribute containing a LLL: marker
-            $search = '/(<.*?)(LLL:\(' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . '\))(.*?)(\/?>)/si';
+            // step 2
+            // find all labels inside of tag attributes
+            // seach for all tags with at least one LLL marker and add a data attribute
+            // 'data-translatelabel-attributes' with a json array with translations for each attribute containing a LLL: marker
+            $search = '/(<[^>]*?)(LLL:\(' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . ',' . $quote . '.*?' . $quote . '\))(.*?)(\/?>)/si';
             $message = $ref->sL('LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:tooltip.message');
             $ref->content = preg_replace_callback(
                 $search,
@@ -149,6 +143,11 @@ class TypoScriptFrontendController
                 },
                 $ref->content
             );
+
+            // search for the rest of LLL markers, these are all outside of html tags
+            if($ref->content === null) {
+                throw new \Sitegeist\Translatelabels\Exception(preg_last_error_msg(), preg_last_error());
+            }
         }
     }
 
