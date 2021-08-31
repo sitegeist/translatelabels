@@ -47,4 +47,10 @@ call_user_func(function () {
 
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['translatelabels_translate']
         = \Sitegeist\Translatelabels\Controller\AjaxController::class . '::saveDataAction';
+
+    // Avoid spinner after loading BE form:
+    $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+    $pageRenderer->addInlineSetting('ContextHelp', 'moduleUrl', '');
+    $dateFormat = ($GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? ['MM-DD-YYYY', 'HH:mm MM-DD-YYYY'] : ['DD-MM-YYYY', 'HH:mm DD-MM-YYYY']);
+    $pageRenderer->addInlineSetting('DateTimePicker', 'DateFormat', $dateFormat);
 });

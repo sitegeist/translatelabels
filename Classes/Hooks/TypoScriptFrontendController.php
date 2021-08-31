@@ -104,6 +104,10 @@ class TypoScriptFrontendController
                 },
                 $ref->content
             );
+            if($ref->content === null) {
+                throw new \Sitegeist\Translatelabels\Exception(preg_last_error_msg(), preg_last_error());
+            }
+
             // step 2
             // find all labels inside of tag attributes
             // seach for all tags with at least one LLL marker and add a data attribute
@@ -141,7 +145,6 @@ class TypoScriptFrontendController
             );
 
             // search for the rest of LLL markers, these are all outside of html tags
-
             if($ref->content === null) {
                 throw new \Sitegeist\Translatelabels\Exception(preg_last_error_msg(), preg_last_error());
             }
