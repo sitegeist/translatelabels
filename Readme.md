@@ -250,3 +250,11 @@ foreach ($overrideLanguageFiles as $language => $languageFiles) {
 ```
 
 Note that `my_extension` should be replaced with your extension key.
+
+## Run unit tests
+
+```
+$ cd typo3conf/ext/translatelabels
+$ composer install
+$ vendor/bin/phpunit -c vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/Renderer/FrontendRendererTest.php
+```

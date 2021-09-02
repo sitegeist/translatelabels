@@ -24,5 +24,8 @@
     },
     "replace": {
         "typo3-ter/translatelabels": "self.version"
+    },
+    "require-dev": {
+        "typo3/testing-framework": "^6.10"
     }
 }
