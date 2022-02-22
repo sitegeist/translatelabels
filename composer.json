@@ -27,5 +27,10 @@
     },
     "require-dev": {
         "typo3/testing-framework": "^6.10"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "translatelabels"
+        }
     }
 }
