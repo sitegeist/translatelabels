@@ -22,6 +22,7 @@ class TranslationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
          */
         $querySettings = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(false);
+        $querySettings->setLanguageOverlayMode('hideNonTranslated');
         $this->setDefaultQuerySettings($querySettings);
     }
 
