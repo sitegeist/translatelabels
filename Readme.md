@@ -1,5 +1,5 @@
 # Extension Translatelabels for TYPO3
-
+forked from https://github.com/sitegeist/translatelabels
 ## Purpose
 
 This extension extends the TYPO3 translation handling by translation
@@ -220,7 +220,7 @@ your ext_localconf.php:
 ```php
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Felogin\\Controller\\FrontendLoginController'] = array(
-    'className' => 'Sitegeist\\Translatelabels\\Plugin\\FrontendLoginController'
+    'className' => 'Rathch\\Translatelabels\\Plugin\\FrontendLoginController'
 );
 ```
 

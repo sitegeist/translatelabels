@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace Sitegeist\Translatelabels\ViewHelpers;
+namespace Rathch\Translatelabels\ViewHelpers;
 
 /**
  *
@@ -16,11 +16,11 @@ use TYPO3\CMS\Form\ViewHelpers\RenderRenderableViewHelper;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\Exception\MissingArrayPathException;
 use TYPO3\CMS\Form\Domain\Model\FormElements\FormElementInterface;
-use Sitegeist\Translatelabels\ViewHelpers\Traits\RenderTranslation;
+use Rathch\Translatelabels\ViewHelpers\Traits\RenderTranslation;
 
 /**
  * Class TranslateElementPropertyViewHelper
- * @package Sitegeist\Translatelabels\ViewHelpers
+ * @package Rathch\Translatelabels\ViewHelpers
  *
  * extends the base translateElementProperty viewhelper to show names of translation labels instead of translations
  * if admin panel is activated and checkbox "show translation labels" is checked.

@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace Sitegeist\Translatelabels\Middleware;
+namespace Rathch\Translatelabels\Middleware;
 
 /**
  *
@@ -10,14 +10,16 @@ namespace Sitegeist\Translatelabels\Middleware;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Http\Uri;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
+use Rathch\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 
@@ -32,7 +34,7 @@ class CreateLabelResolver implements MiddlewareInterface
      * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
      * @return ResponseInterface
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
+     * @throws RouteNotFoundException
      */
     public function process(
         ServerRequestInterface $request,
@@ -57,7 +59,7 @@ class CreateLabelResolver implements MiddlewareInterface
                 0
             );
             $dataHandler = GeneralUtility::makeInstance(
-                \TYPO3\CMS\Core\DataHandling\DataHandler::class
+                DataHandler::class
             );
             if ($labelRecordInDefaultLanguage === null) {
                 // create record in default language on the fly
@@ -147,8 +149,8 @@ class CreateLabelResolver implements MiddlewareInterface
      * @param $sysFolderWithTranslationsUid
      * @param $labelKey
      * @param $translation
-     * @return \TYPO3\CMS\Core\Http\Uri
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
+     * @return Uri
+     * @throws RouteNotFoundException
      */
     protected function getLinkToBEForNewTranslation($sysFolderWithTranslationsUid, $labelKey, $translation)
     {
@@ -168,8 +170,8 @@ class CreateLabelResolver implements MiddlewareInterface
      * @param $sysFolderWithTranslationsUid
      * @param $translationUid
      * @param $sysLanguageUid
-     * @return \TYPO3\CMS\Core\Http\Uri
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
+     * @return Uri
+     * @throws RouteNotFoundException
      */
     protected function getLinkToBEForNewLocalizationOfTranslation($sysFolderWithTranslationsUid, $translationUid, $sysLanguageUid)
     {
@@ -195,8 +197,8 @@ class CreateLabelResolver implements MiddlewareInterface
     /**
      * @param $sysFolderWithTranslationsUid
      * @param $translationUid
-     * @return \TYPO3\CMS\Core\Http\Uri
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
+     * @return Uri
+     * @throws RouteNotFoundException
      */
     protected function getLinkToEditTranslation($sysFolderWithTranslationsUid, $translationUid)
     {
@@ -221,15 +223,15 @@ class CreateLabelResolver implements MiddlewareInterface
      *
      * @param $route
      * @param $urlParameters
-     * @return \TYPO3\CMS\Core\Http\Uri
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
+     * @return Uri
+     * @throws RouteNotFoundException
      */
     protected function getLinkToBEModule($route, $urlParameters)
     {
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
         try {
             $uri = $uriBuilder->buildUriFromRoute($route, $urlParameters);
-        } catch (\TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException $e) {
+        } catch (RouteNotFoundException $e) {
             $uri = $uriBuilder->buildUriFromRoutePath($route, $urlParameters);
         }
         return $uri;

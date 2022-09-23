@@ -1,6 +1,6 @@
 <?php
 
-namespace Sitegeist\Translatelabels\ViewHelpers;
+namespace Rathch\Translatelabels\ViewHelpers;
 
 /**
  *
@@ -10,13 +10,14 @@ namespace Sitegeist\Translatelabels\ViewHelpers;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Fluid\Core\ViewHelper\Exception\InvalidVariableException;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
-use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
+use Rathch\Translatelabels\Utility\TranslationLabelUtility;
 
 /**
  * Translate a key from locallang. The files are loaded from the folder
@@ -83,7 +84,7 @@ class TranslateViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      *
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
     public function initializeArguments()
     {
@@ -104,7 +105,7 @@ class TranslateViewHelper extends AbstractViewHelper
      * @param RenderingContextInterface $renderingContext
      * @return mixed|null|string
      * @throws \TYPO3\CMS\Backend\Exception
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws AspectNotFoundException
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
@@ -120,7 +121,7 @@ class TranslateViewHelper extends AbstractViewHelper
         }
 
         if ((string)$id === '') {
-            throw new InvalidVariableException('An argument "key" or "id" has to be provided', 1351584844);
+            throw new \TYPO3Fluid\Fluid\Core\Exception('An argument "key" or "id" has to be provided', 1351584844);
         }
         $request = $renderingContext->getControllerContext()->getRequest();
         $extensionName = $extensionName ?? $request->getControllerExtensionName();
@@ -136,7 +137,7 @@ class TranslateViewHelper extends AbstractViewHelper
             }
         }
 
-        if (TYPO3_MODE === 'FE') {
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
             $id = TranslationLabelUtility::getExtendLabelKeyWithLanguageFilePath($id, $extensionName);
             $value = TranslationLabelUtility::readLabelFromDatabase($id, $value);
             if (\is_array($translateArguments) && $value !== null) {

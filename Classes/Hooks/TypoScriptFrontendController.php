@@ -1,6 +1,6 @@
 <?php
 
-namespace Sitegeist\Translatelabels\Hooks;
+namespace Rathch\Translatelabels\Hooks;
 
 /**
  *
@@ -10,17 +10,18 @@ namespace Sitegeist\Translatelabels\Hooks;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use PHPUnit\Runner\Exception;
-use Sitegeist\Translatelabels\Renderer\FrontendRenderer;
+use Rathch\Translatelabels\Renderer\FrontendRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
+use Rathch\Translatelabels\Utility\TranslationLabelUtility;
 
 /**
  * Class TypoScriptFrontendController
  * Used for Hook $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output']
  *
- * @package Sitegeist\Translatelabels\Hooks
+ * @package Rathch\Translatelabels\Hooks
  */
 class TypoScriptFrontendController
 {
@@ -31,8 +32,8 @@ class TypoScriptFrontendController
      * @param array $params
      * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $ref
      * @throws \TYPO3\CMS\Backend\Exception
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws RouteNotFoundException
+     * @throws AspectNotFoundException
      */
     public function contentPostProcAll(
         array &$params,

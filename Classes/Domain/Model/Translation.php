@@ -1,6 +1,7 @@
 <?php
-namespace Sitegeist\Translatelabels\Domain\Model;
+namespace Rathch\Translatelabels\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  *
  * This file is part of the "translatelabels" Extension for TYPO3 CMS.
@@ -9,11 +10,10 @@ namespace Sitegeist\Translatelabels\Domain\Model;
  * LICENSE file that was distributed with this source code.
  *
  */
-
 /**
  * Translation
  */
-class Translation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Translation extends AbstractEntity
 {
     /**
      * labelkey

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel;
+namespace Rathch\Translatelabels\Adminpanel\Modules\TranslateLabel;
 
 /**
  *
@@ -22,7 +22,7 @@ use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
-use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
+use Rathch\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Adminpanel\Service\ConfigurationService;

@@ -1,8 +1,10 @@
 <?php
 
-namespace Sitegeist\Translatelabels\Plugin;
+namespace Rathch\Translatelabels\Plugin;
 
-use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
+use TYPO3\CMS\Backend\Exception;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use Rathch\Translatelabels\Utility\TranslationLabelUtility;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 
@@ -66,7 +68,6 @@ class FrontendLoginController extends \TYPO3\CMS\Felogin\Controller\FrontendLogi
      * Localization, locallang functions
      *
      **************************/
-
     /**
      * Returns the localized label of the LOCAL_LANG key, $key
      * Notice that for debugging purposes prefixes for the output values can be set with the internal
@@ -76,8 +77,8 @@ class FrontendLoginController extends \TYPO3\CMS\Felogin\Controller\FrontendLogi
      * @param string $alternativeLabel Alternative string to return IF no value is found set for the key,
      * neither for the local language nor the default.
      * @return string The value from LOCAL_LANG.
-     * @throws \TYPO3\CMS\Backend\Exception
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws Exception
+     * @throws AspectNotFoundException
      */
     public function pi_getLL($key, $alternativeLabel = '') // phpcs:disable
     {

@@ -1,6 +1,8 @@
 <?php
-namespace Sitegeist\Translatelabels\Domain\Repository;
+namespace Rathch\Translatelabels\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 /**
  *
  * This file is part of the "translatelabels" Extension for TYPO3 CMS.
@@ -9,18 +11,17 @@ namespace Sitegeist\Translatelabels\Domain\Repository;
  * LICENSE file that was distributed with this source code.
  *
  */
-
 /**
  * The repository for Translations
  */
-class TranslationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class TranslationRepository extends Repository
 {
     public function initializeObject()
     {
         /**
-         * @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings
+         * @var Typo3QuerySettings $querySettings
          */
-        $querySettings = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings::class);
+        $querySettings = $this->objectManager->get(Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(false);
         $this->setDefaultQuerySettings($querySettings);
     }

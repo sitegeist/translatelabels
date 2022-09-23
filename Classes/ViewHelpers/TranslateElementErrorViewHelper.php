@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace Sitegeist\Translatelabels\ViewHelpers;
+namespace Rathch\Translatelabels\ViewHelpers;
 
 /**
  *
@@ -14,12 +14,12 @@ namespace Sitegeist\Translatelabels\ViewHelpers;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
-use Sitegeist\Translatelabels\ViewHelpers\Traits\RenderTranslation;
+use Rathch\Translatelabels\ViewHelpers\Traits\RenderTranslation;
 use TYPO3\CMS\Form\ViewHelpers\RenderRenderableViewHelper;
 
 /**
  * Class TranslateElementErrorViewHelper
- * @package Sitegeist\Translatelabels\ViewHelpers
+ * @package Rathch\Translatelabels\ViewHelpers
  *
  * extends the base translateElementError viewhelper to show names of translation labels instead of translations
  * if admin panel is activated and checkbox "show translation labels" is checked.

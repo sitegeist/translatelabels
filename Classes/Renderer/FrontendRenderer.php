@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sitegeist\Translatelabels\Renderer;
+namespace Rathch\Translatelabels\Renderer;
 
-use Sitegeist\Translatelabels\Exception;
-use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use Rathch\Translatelabels\Exception;
+use Rathch\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Http\Uri;
@@ -39,7 +40,7 @@ class FrontendRenderer {
      * @param int $sysFolderWithTranslationsUid
      * @return array
      * @throws RouteNotFoundException
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws AspectNotFoundException
      */
     public function parseLabelTags(string $content, int $sysFolderWithTranslationsUid) : array {
         $labelTags = [];
@@ -149,7 +150,7 @@ class FrontendRenderer {
      * @return string
      * @throws Exception
      * @throws RouteNotFoundException
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws AspectNotFoundException
      */
     public function substituteLabels($content, $message) : string {
 
@@ -285,9 +286,9 @@ class FrontendRenderer {
      * @param $sysFolderWithTranslationsUid
      * @param $key
      * @param $translationString
-     * @return \TYPO3\CMS\Core\Http\Uri
+     * @return Uri
      * @throws RouteNotFoundException
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws AspectNotFoundException
      */
     public function getLinkToBE($sysFolderWithTranslationsUid, $key, $translationString)
     {
@@ -304,7 +305,7 @@ class FrontendRenderer {
 
     /**
      * Generates link to edit translation records in backend
-     * Works in conjunction with Sitegeist\Translatelabels\Middleware\CreateLabelResolver which
+     * Works in conjunction with Rathch\Translatelabels\Middleware\CreateLabelResolver which
      * does some magic to automatically create missing translations records in default language and prepares
      * localizations
      *
@@ -312,7 +313,7 @@ class FrontendRenderer {
      * @param $translation
      * @param $key
      * @param $sysLanguageUid
-     * @return \TYPO3\CMS\Core\Http\Uri
+     * @return Uri
      * @throws RouteNotFoundException
      */
     protected function getLinkToEditTranslation($sysFolderWithTranslationsUid, $translation, $key, $sysLanguageUid)
@@ -333,7 +334,7 @@ class FrontendRenderer {
      *
      * @param $route
      * @param $urlParameters
-     * @return \TYPO3\CMS\Core\Http\Uri
+     * @return Uri
      * @throws RouteNotFoundException
      */
     protected function getLinkToBEModule($route, $urlParameters) : Uri

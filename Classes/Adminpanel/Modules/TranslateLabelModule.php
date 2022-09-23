@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Sitegeist\Translatelabels\Adminpanel\Modules;
+namespace Rathch\Translatelabels\Adminpanel\Modules;
 
 /**
  *

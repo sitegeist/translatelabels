@@ -1,5 +1,5 @@
 <?php
-namespace Sitegeist\Translatelabels\ViewHelpers\FluidComponents\Form;
+namespace Rathch\Translatelabels\ViewHelpers\FluidComponents\Form;
 
 /**
  *
@@ -9,7 +9,7 @@ namespace Sitegeist\Translatelabels\ViewHelpers\FluidComponents\Form;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Form\Domain\Model\Renderable\RootRenderableInterface;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
@@ -17,11 +17,11 @@ use TYPO3\CMS\Form\Service\TranslationService;
 use TYPO3\CMS\Form\ViewHelpers\RenderRenderableViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
-use Sitegeist\Translatelabels\ViewHelpers\Traits\RenderTranslation;
-use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
+use Rathch\Translatelabels\ViewHelpers\Traits\RenderTranslation;
+use Rathch\Translatelabels\Utility\TranslationLabelUtility;
 
 /**
- * @package Sitegeist\Translatelabels\ViewHelpers\Form
+ * @package Rathch\Translatelabels\ViewHelpers\Form
  * @author Alexander Bohndorf <bohndorf@sitegeist.de>
  */
 class TranslatedValidationResultsViewHelper extends \SMS\FluidComponents\ViewHelpers\Form\TranslatedValidationResultsViewHelper
@@ -88,7 +88,7 @@ class TranslatedValidationResultsViewHelper extends \SMS\FluidComponents\ViewHel
             ->getViewHelperVariableContainer()
             ->get(RenderRenderableViewHelper::class, 'formRuntime');
 
-        $originalTranslation = TranslationService::getInstance()->translateFormElementError(
+        $originalTranslation = GeneralUtility::makeInstance(TranslationService::class)->translateFormElementError(
             $element,
             $code,
             $arguments,

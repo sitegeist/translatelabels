@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel;
+namespace Rathch\Translatelabels\Adminpanel\Modules\TranslateLabel;
 
 /**
  *
@@ -11,9 +11,9 @@ namespace Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
-use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
+use Rathch\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3\CMS\Adminpanel\ModuleApi\AbstractSubModule;
 use TYPO3\CMS\Adminpanel\ModuleApi\ConfigurableInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\ContentProviderInterface;
@@ -81,7 +81,7 @@ class TranslateLabel extends AbstractSubModule implements DataProviderInterface,
      *
      * @param string $route
      * @return string
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
+     * @throws RouteNotFoundException
      */
     protected function generateBackendUrl(string $route): string
     {
@@ -91,7 +91,7 @@ class TranslateLabel extends AbstractSubModule implements DataProviderInterface,
     /**
      * Creates the content for the "info" section ("module") of the Admin Panel
      *
-     * @param \TYPO3\CMS\Adminpanel\ModuleApi\ModuleData $data
+     * @param ModuleData $data
      * @return string HTML content for the section. Consists of a string with table-rows with four columns.
      * @see display()
      */
