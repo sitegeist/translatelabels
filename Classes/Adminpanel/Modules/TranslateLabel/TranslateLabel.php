@@ -66,7 +66,7 @@ class TranslateLabel extends AbstractSubModule implements DataProviderInterface,
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         return new ModuleData(
             [
-                'labels' => $GLOBALS['T3_VAR']['ext']['translatelabels']['labels'],
+                'labels' => $GLOBALS['TRANS']['ext']['translatelabels']['labels'],
                 'showTranslateLabels' => $this->configurationService->getConfigurationOption('translatelabels', 'showTranslationLabels'),
                 'saveUrl' => $this->generateBackendUrl('ajax_translatelabels_translate'),
                 'sysLanguageUid' => $this->context->getPropertyFromAspect('language', 'id'),
