@@ -1,6 +1,6 @@
 <?php
 
-use Rathch\Translatelabels\Controller\AjaxController;
+use Sitegeist\Translatelabels\Controller\AjaxController;
 /**
  * Definitions for routes provided by EXT:translatelabels
  * Contains all AJAX-based routes for entry points

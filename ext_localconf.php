@@ -1,10 +1,10 @@
 <?php
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use Rathch\Translatelabels\Hooks\TypoScriptFrontendController;
-use Rathch\Translatelabels\Adminpanel\Modules\TranslateLabelModule;
-use Rathch\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabel;
-use Rathch\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabelInfo;
-use Rathch\Translatelabels\Controller\AjaxController;
+use Sitegeist\Translatelabels\Hooks\TypoScriptFrontendController;
+use Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabelModule;
+use Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabel;
+use Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabelInfo;
+use Sitegeist\Translatelabels\Controller\AjaxController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
 defined('TYPO3') or die();
@@ -26,22 +26,22 @@ call_user_func(function () {
 
 
     // override f: namespace for fluid to override f:translate
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['f'][] = 'Rathch\\Translatelabels\\ViewHelpers';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['f'][] = 'Sitegeist\\Translatelabels\\ViewHelpers';
 
     // override formvh: namespace for fluid to override f:translate
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['formvh'][] = 'Rathch\\Translatelabels\\ViewHelpers';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['formvh'][] = 'Sitegeist\\Translatelabels\\ViewHelpers';
 
     // override fc: namespace for fluid_components to override fc:form.translatedValidationResults
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['fc'][] = 'Rathch\\Translatelabels\\ViewHelpers\\FluidComponents';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['fc'][] = 'Sitegeist\\Translatelabels\\ViewHelpers\\FluidComponents';
 
     // xclass TYPO3\CMS\Frontend\Plugin\AbstractPlugin to extend method pi_getLL
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Frontend\\Plugin\\AbstractPlugin'] = array(
-        'className' => 'Rathch\\Translatelabels\\Plugin\\FrontendLoginController'
+        'className' => 'Sitegeist\\Translatelabels\\Plugin\\FrontendLoginController'
     );
 
     // xclass TYPO3\CMS\Frontend\Plugin\AbstractPlugin to extend method pi_getLL
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Felogin\\Controller\\FrontendLoginController'] = array(
-        'className' => 'Rathch\\Translatelabels\\Plugin\\FrontendLoginController'
+        'className' => 'Sitegeist\\Translatelabels\\Plugin\\FrontendLoginController'
     );
 
     // Admin Panel Integration

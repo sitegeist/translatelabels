@@ -17,7 +17,7 @@ $EM_CONF[$_EXTKEY] = [
     ],
     'autoload' => [
         'psr-4' => [
-            'Rathch\\Translatelabels\\' => 'Classes'
+            'Sitegeist\\Translatelabels\\' => 'Classes'
         ]
     ]
 ];

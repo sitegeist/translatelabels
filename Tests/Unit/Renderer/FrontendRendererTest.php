@@ -1,6 +1,6 @@
 <?php
 
-namespace Rathch\Translatelabels\Tests\Unit\Renderer;
+namespace Sitegeist\Translatelabels\Tests\Unit\Renderer;
 
 /**
  *
@@ -12,7 +12,7 @@ namespace Rathch\Translatelabels\Tests\Unit\Renderer;
  */
 
 use TYPO3\TestingFramework\Core\BaseTestCase;
-use Rathch\Translatelabels\Renderer\FrontendRenderer;
+use Sitegeist\Translatelabels\Renderer\FrontendRenderer;
 
 /**
  * Test class for FrontendRendererDataProvider

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Rathch\Translatelabels\Adminpanel\Modules\TranslateLabel;
+namespace Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel;
 
 /**
  *
@@ -13,7 +13,7 @@ namespace Rathch\Translatelabels\Adminpanel\Modules\TranslateLabel;
  */
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
-use Rathch\Translatelabels\Utility\TranslationLabelUtility;
+use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3\CMS\Adminpanel\ModuleApi\AbstractSubModule;
 use TYPO3\CMS\Adminpanel\ModuleApi\ConfigurableInterface;
 use TYPO3\CMS\Adminpanel\ModuleApi\ContentProviderInterface;

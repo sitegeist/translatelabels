@@ -1,5 +1,5 @@
 <?php
-namespace Rathch\Translatelabels\Domain\Model;
+namespace Sitegeist\Translatelabels\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**

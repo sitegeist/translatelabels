@@ -1,6 +1,6 @@
 <?php
 
-namespace Rathch\Translatelabels\Utility;
+namespace Sitegeist\Translatelabels\Utility;
 
 /**
  *
@@ -14,14 +14,14 @@ use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use Psr\Http\Message\ServerRequestInterface;
-use Rathch\Translatelabels\Domain\Model\Translation;
+use Sitegeist\Translatelabels\Domain\Model\Translation;
 use TYPO3\CMS\Backend\Exception;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Core\Context\Context;
-use Rathch\Translatelabels\Domain\Repository\TranslationRepository;
+use Sitegeist\Translatelabels\Domain\Repository\TranslationRepository;
 use TYPO3\CMS\Adminpanel\Service\ConfigurationService;
 
 class TranslationLabelUtility

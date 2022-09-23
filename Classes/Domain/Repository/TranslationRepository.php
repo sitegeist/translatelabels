@@ -1,5 +1,5 @@
 <?php
-namespace Rathch\Translatelabels\Domain\Repository;
+namespace Sitegeist\Translatelabels\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;

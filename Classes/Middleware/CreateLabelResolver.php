@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace Rathch\Translatelabels\Middleware;
+namespace Sitegeist\Translatelabels\Middleware;
 
 /**
  *
@@ -19,7 +19,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use Rathch\Translatelabels\Utility\TranslationLabelUtility;
+use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 

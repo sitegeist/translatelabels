@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Rathch\Translatelabels\Controller;
+namespace Sitegeist\Translatelabels\Controller;
 
 /**
  *
@@ -24,7 +24,7 @@ use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use Rathch\Translatelabels\Utility\TranslationLabelUtility;
+use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 
 /**
  * Admin Panel Ajax Controller - Route endpoint for ajax actions

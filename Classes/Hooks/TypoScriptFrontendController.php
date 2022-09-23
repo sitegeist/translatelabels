@@ -1,6 +1,6 @@
 <?php
 
-namespace Rathch\Translatelabels\Hooks;
+namespace Sitegeist\Translatelabels\Hooks;
 
 /**
  *
@@ -13,15 +13,15 @@ namespace Rathch\Translatelabels\Hooks;
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use PHPUnit\Runner\Exception;
-use Rathch\Translatelabels\Renderer\FrontendRenderer;
+use Sitegeist\Translatelabels\Renderer\FrontendRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Rathch\Translatelabels\Utility\TranslationLabelUtility;
+use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 
 /**
  * Class TypoScriptFrontendController
  * Used for Hook $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output']
  *
- * @package Rathch\Translatelabels\Hooks
+ * @package Sitegeist\Translatelabels\Hooks
  */
 class TypoScriptFrontendController
 {

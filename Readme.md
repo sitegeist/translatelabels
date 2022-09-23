@@ -220,7 +220,7 @@ your ext_localconf.php:
 ```php
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Felogin\\Controller\\FrontendLoginController'] = array(
-    'className' => 'Rathch\\Translatelabels\\Plugin\\FrontendLoginController'
+    'className' => 'Sitegeist\\Translatelabels\\Plugin\\FrontendLoginController'
 );
 ```
 

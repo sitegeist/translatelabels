@@ -1,6 +1,6 @@
 <?php
 
-use Rathch\Translatelabels\Middleware\CreateLabelResolver;
+use Sitegeist\Translatelabels\Middleware\CreateLabelResolver;
 return [
     'backend' => [
         'sitegeist/translatelabels/create-label-resolver' => [

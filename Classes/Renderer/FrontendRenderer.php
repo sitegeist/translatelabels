@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Rathch\Translatelabels\Renderer;
+namespace Sitegeist\Translatelabels\Renderer;
 
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
-use Rathch\Translatelabels\Exception;
-use Rathch\Translatelabels\Utility\TranslationLabelUtility;
+use Sitegeist\Translatelabels\Exception;
+use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Http\Uri;
@@ -305,7 +305,7 @@ class FrontendRenderer {
 
     /**
      * Generates link to edit translation records in backend
-     * Works in conjunction with Rathch\Translatelabels\Middleware\CreateLabelResolver which
+     * Works in conjunction with Sitegeist\Translatelabels\Middleware\CreateLabelResolver which
      * does some magic to automatically create missing translations records in default language and prepares
      * localizations
      *

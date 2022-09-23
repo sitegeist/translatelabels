@@ -1,5 +1,5 @@
 <?php
-namespace Rathch\Translatelabels\ViewHelpers\FluidComponents\Form;
+namespace Sitegeist\Translatelabels\ViewHelpers\FluidComponents\Form;
 
 /**
  *
@@ -17,11 +17,11 @@ use TYPO3\CMS\Form\Service\TranslationService;
 use TYPO3\CMS\Form\ViewHelpers\RenderRenderableViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
-use Rathch\Translatelabels\ViewHelpers\Traits\RenderTranslation;
-use Rathch\Translatelabels\Utility\TranslationLabelUtility;
+use Sitegeist\Translatelabels\ViewHelpers\Traits\RenderTranslation;
+use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 
 /**
- * @package Rathch\Translatelabels\ViewHelpers\Form
+ * @package Sitegeist\Translatelabels\ViewHelpers\Form
  * @author Alexander Bohndorf <bohndorf@sitegeist.de>
  */
 class TranslatedValidationResultsViewHelper extends \SMS\FluidComponents\ViewHelpers\Form\TranslatedValidationResultsViewHelper

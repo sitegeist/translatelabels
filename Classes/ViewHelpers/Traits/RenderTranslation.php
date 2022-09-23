@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace Rathch\Translatelabels\ViewHelpers\Traits;
+namespace Sitegeist\Translatelabels\ViewHelpers\Traits;
 
 /**
  *
@@ -11,7 +11,7 @@ namespace Rathch\Translatelabels\ViewHelpers\Traits;
  *
  */
 use TYPO3\CMS\Core\Http\ApplicationType;
-use Rathch\Translatelabels\Utility\TranslationLabelUtility;
+use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Form\ViewHelpers\RenderRenderableViewHelper;
 

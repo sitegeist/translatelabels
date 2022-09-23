@@ -1,10 +1,10 @@
 <?php
 
-namespace Rathch\Translatelabels\Plugin;
+namespace Sitegeist\Translatelabels\Plugin;
 
 use TYPO3\CMS\Backend\Exception;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
-use Rathch\Translatelabels\Utility\TranslationLabelUtility;
+use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 

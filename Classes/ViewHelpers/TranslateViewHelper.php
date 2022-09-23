@@ -1,6 +1,6 @@
 <?php
 
-namespace Rathch\Translatelabels\ViewHelpers;
+namespace Sitegeist\Translatelabels\ViewHelpers;
 
 /**
  *
@@ -17,7 +17,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
-use Rathch\Translatelabels\Utility\TranslationLabelUtility;
+use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 
 /**
  * Translate a key from locallang. The files are loaded from the folder
