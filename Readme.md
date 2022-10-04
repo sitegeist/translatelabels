@@ -1,5 +1,5 @@
 # Extension Translatelabels for TYPO3
-forked from https://github.com/sitegeist/translatelabels
+
 ## Purpose
 
 This extension extends the TYPO3 translation handling by translation
@@ -45,7 +45,7 @@ The development and the public-releases of this package is generously sponsored 
 ## Supported TYPO3 Versions
 
 * Version 1.x of this extension supports TYPO3 9.5.
-* Version 2.x of this extension supports TYPO3 10.1.
+* Version 2.x of this extension supports TYPO3 10.1 and 11.5.
 
 ## How to install
 
@@ -104,11 +104,12 @@ default language.
 
 ## Change Log
 
-| translatelabels | TYPO3  | Changes |
-| --------------- | -----  | --------|
-| 1.0.x           | 9.5.x  | Initial release       |
+| translatelabels | TYPO3  | Changes                                 |
+|-----------------|--------|-----------------------------------------|
+| 1.0.x           | 9.5.x  | Initial release                         |
 | 1.1.x           | 9.5.x  | Removed LLL:EXT: prefix from label keys |
-| 2.0.x           | 10.1.x | Compatibility for TYPO3 10.1  |
+| 2.0.x           | 10.1.x | Compatibility for TYPO3 10.1            |
+| 2.1.x           | 11.5.x | Compatibility for TYPO3 11.5            |
 
 ## How to activate for BE users
 

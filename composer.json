@@ -3,7 +3,6 @@
     "type": "typo3-cms-extension",
     "description": "This extension extends the TYPO3 translation handling by translation records that can be edited by backend users. In this way backend users are able to translate labels without having access to the language files.",
     "license": ["GPL-2.0-or-later"],
-    "version": "3.0.0",
     "authors": [
         {
             "name": "Alexander Bohndorf",
