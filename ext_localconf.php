@@ -19,12 +19,6 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] =
         TypoScriptFrontendController::class . '->contentPostProcAll';
 
-    //$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_eofe'][] =
-      //  TypoScriptFrontendController::class . '->contentPostProcAll';
-
-
-
-
     // override f: namespace for fluid to override f:translate
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['f'][] = 'Sitegeist\\Translatelabels\\ViewHelpers';
 
