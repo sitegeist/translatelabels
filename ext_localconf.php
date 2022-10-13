@@ -1,17 +1,15 @@
 <?php
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use Sitegeist\Translatelabels\Hooks\TypoScriptFrontendController;
 use Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabelModule;
 use Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabel;
 use Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabelInfo;
 use Sitegeist\Translatelabels\Controller\AjaxController;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Page\PageRenderer;
+
 defined('TYPO3') or die();
 
 call_user_func(function () {
 
-    ExtensionManagementUtility::addPageTSConfig(
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
         "@import 'EXT:translatelabels/Configuration/TSconfig/page.tsconfig'"
     );
 
@@ -57,7 +55,7 @@ call_user_func(function () {
         = AjaxController::class . '::saveDataAction';
 
     // Avoid spinner after loading BE form:
-    $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+    $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
     $pageRenderer->addInlineSetting('ContextHelp', 'moduleUrl', '');
     $dateFormat = ($GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? ['MM-DD-YYYY', 'HH:mm MM-DD-YYYY'] : ['DD-MM-YYYY', 'HH:mm DD-MM-YYYY']);
     $pageRenderer->addInlineSetting('DateTimePicker', 'DateFormat', $dateFormat);
