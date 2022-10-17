@@ -1,9 +1,4 @@
 <?php
-use Sitegeist\Translatelabels\Hooks\TypoScriptFrontendController;
-use Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabelModule;
-use Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabel;
-use Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabelInfo;
-use Sitegeist\Translatelabels\Controller\AjaxController;
 
 defined('TYPO3') or die();
 
@@ -15,7 +10,7 @@ call_user_func(function () {
 
     // Register hook after all fe generation, i.e. after inclusion of uncached user_int objects
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] =
-        TypoScriptFrontendController::class . '->contentPostProcAll';
+        \Sitegeist\Translatelabels\Hooks\TypoScriptFrontendController::class . '->contentPostProcAll';
 
     // override f: namespace for fluid to override f:translate
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['f'][] = 'Sitegeist\\Translatelabels\\ViewHelpers';
@@ -38,21 +33,21 @@ call_user_func(function () {
 
     // Admin Panel Integration
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['adminpanel']['modules']['translatelabels'] = [
-        'module' => TranslateLabelModule::class,
+        'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabelModule::class,
         'after' => ['debug'],
         'submodules' => [
             'translatelabel' => [
-                'module' => TranslateLabel::class,
+                'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel::class,
             ],
             'info' => [
-                'module' => TranslateLabelInfo::class,
+                'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabelInfo::class,
                 'after' => ['translatelabel']
             ]
         ]
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['translatelabels_translate']
-        = AjaxController::class . '::saveDataAction';
+        = \Sitegeist\Translatelabels\Controller\AjaxController::class . '::saveDataAction';
 
     // Avoid spinner after loading BE form:
     $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
