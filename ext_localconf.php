@@ -37,10 +37,10 @@ call_user_func(function () {
         'after' => ['debug'],
         'submodules' => [
             'translatelabel' => [
-                'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel::class,
+                'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabel::class,
             ],
             'info' => [
-                'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabelInfo::class,
+                'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabelInfo::class,
                 'after' => ['translatelabel']
             ]
         ]
