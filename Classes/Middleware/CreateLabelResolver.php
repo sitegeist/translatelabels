@@ -44,6 +44,7 @@ class CreateLabelResolver implements MiddlewareInterface
         if (\is_array($queryParams) &&
             isset($queryParams['route']) &&
             $queryParams['route'] === '/record/edit' &&
+            isset($queryParams['tx_translatelabels']) &&
             \is_array($queryParams['tx_translatelabels']) &&
             isset($queryParams['tx_translatelabels']['key'])
         ) {
