@@ -1,5 +1,6 @@
 <?php
-defined('TYPO3_MODE') or die();
+
+defined('TYPO3') or die();
 
 call_user_func(function () {
 
@@ -8,8 +9,8 @@ call_user_func(function () {
     );
 
     // Register hook after all fe generation, i.e. after inclusion of uncached user_int objects
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_eofe'][] =
-        Sitegeist\Translatelabels\Hooks\TypoScriptFrontendController::class . '->contentPostProcAll';
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] =
+        \Sitegeist\Translatelabels\Hooks\TypoScriptFrontendController::class . '->contentPostProcAll';
 
     // override f: namespace for fluid to override f:translate
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['f'][] = 'Sitegeist\\Translatelabels\\ViewHelpers';
@@ -32,14 +33,14 @@ call_user_func(function () {
 
     // Admin Panel Integration
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['adminpanel']['modules']['translatelabels'] = [
-        'module' => Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabelModule::class,
+        'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabelModule::class,
         'after' => ['debug'],
         'submodules' => [
             'translatelabel' => [
-                'module' => Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabel::class,
+                'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel::class,
             ],
             'info' => [
-                'module' => Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel\TranslateLabelInfo::class,
+                'module' => \Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabelInfo::class,
                 'after' => ['translatelabel']
             ]
         ]

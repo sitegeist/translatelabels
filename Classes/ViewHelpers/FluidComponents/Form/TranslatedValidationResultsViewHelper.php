@@ -9,7 +9,7 @@ namespace Sitegeist\Translatelabels\ViewHelpers\FluidComponents\Form;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Form\Domain\Model\Renderable\RootRenderableInterface;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
@@ -88,7 +88,7 @@ class TranslatedValidationResultsViewHelper extends \SMS\FluidComponents\ViewHel
             ->getViewHelperVariableContainer()
             ->get(RenderRenderableViewHelper::class, 'formRuntime');
 
-        $originalTranslation = TranslationService::getInstance()->translateFormElementError(
+        $originalTranslation = GeneralUtility::makeInstance(TranslationService::class)->translateFormElementError(
             $element,
             $code,
             $arguments,

@@ -10,7 +10,8 @@ namespace Sitegeist\Translatelabels\Hooks;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use PHPUnit\Runner\Exception;
 use Sitegeist\Translatelabels\Renderer\FrontendRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -31,8 +32,8 @@ class TypoScriptFrontendController
      * @param array $params
      * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $ref
      * @throws \TYPO3\CMS\Backend\Exception
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws RouteNotFoundException
+     * @throws AspectNotFoundException
      */
     public function contentPostProcAll(
         array &$params,
@@ -49,7 +50,7 @@ class TypoScriptFrontendController
             $frontendRenderer = GeneralUtility::makeInstance(FrontendRenderer::class);
 
             // store all labels in T3_VAR to show them in admin panel later on
-            $GLOBALS['T3_VAR']['ext']['translatelabels']['labels'] = $frontendRenderer->parseLabelTags($ref->content, $sysFolderWithTranslationsUid);
+            $GLOBALS['TRANSLATELABELS'] = $frontendRenderer->parseLabelTags($ref->content, $sysFolderWithTranslationsUid);
 
             // step 1
             // substitute all labels inside of tag attributes

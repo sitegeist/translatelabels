@@ -7,13 +7,10 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Alexander Bohndorf',
     'author_email' => 'bohndorf@sitegeist.de',
     'state' => 'beta',
-    'uploadfolder' => 0,
-    'createDirs' => '',
-    'clearCacheOnLoad' => 0,
-    'version' => '2.0.14',
+    'version' => '2.1.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.0.0-10.4.99',
+            'typo3' => '10.0.0-11.5.99',
         ],
         'conflicts' => [],
         'suggests' => [],

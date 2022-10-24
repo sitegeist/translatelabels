@@ -10,7 +10,7 @@ namespace Sitegeist\Translatelabels\ViewHelpers\Traits;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3\CMS\Core\Http\ApplicationType;
 use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Form\ViewHelpers\RenderRenderableViewHelper;
@@ -34,7 +34,7 @@ trait RenderTranslation
     public static function renderTranslation(string $translationKey, string $value, array $translateArguments)
     {
 
-        if (TYPO3_MODE === 'FE' && $value !== '') {
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend() && $value !== '') {
             // language files in chain of form framework are without LLL:, all others use this prefix
             // $id = (strpos($translationKey, 'LLL:') === 0) ? $translationKey : 'LLL:' . $translationKey;
             $id = TranslationLabelUtility::getLabelKeyWithoutPrefixes($translationKey);

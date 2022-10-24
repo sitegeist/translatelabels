@@ -11,7 +11,7 @@ namespace Sitegeist\Translatelabels\Controller;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use function GuzzleHttp\json_decode;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Adminpanel\Service\ConfigurationService;
 use TYPO3\CMS\Adminpanel\Service\ModuleLoader;
@@ -91,7 +91,7 @@ class AjaxController
     public function translateAction(ServerRequestInterface $request): JsonResponse
     {
         try {
-            $data = \GuzzleHttp\json_decode($request->getBody()->getContents());
+            $data = json_decode($request->getBody()->getContents());
             $this->checkPermissions($data);
             $context = GeneralUtility::makeInstance(Context::class);
             $successMessage = $this->languageService->sL('LLL:EXT:translatelabels/Resources/Private/Language/locallang_adminpanel.xlf:sub.module.ajax.success');

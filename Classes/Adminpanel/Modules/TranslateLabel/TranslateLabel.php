@@ -11,7 +11,7 @@ namespace Sitegeist\Translatelabels\Adminpanel\Modules\TranslateLabel;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
 use Sitegeist\Translatelabels\Utility\TranslationLabelUtility;
 use TYPO3\CMS\Adminpanel\ModuleApi\AbstractSubModule;
@@ -66,7 +66,7 @@ class TranslateLabel extends AbstractSubModule implements DataProviderInterface,
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         return new ModuleData(
             [
-                'labels' => $GLOBALS['T3_VAR']['ext']['translatelabels']['labels'],
+                'labels' => $GLOBALS['TRANSLATELABELS'],
                 'showTranslateLabels' => $this->configurationService->getConfigurationOption('translatelabels', 'showTranslationLabels'),
                 'saveUrl' => $this->generateBackendUrl('ajax_translatelabels_translate'),
                 'sysLanguageUid' => $this->context->getPropertyFromAspect('language', 'id'),
@@ -81,7 +81,7 @@ class TranslateLabel extends AbstractSubModule implements DataProviderInterface,
      *
      * @param string $route
      * @return string
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
+     * @throws RouteNotFoundException
      */
     protected function generateBackendUrl(string $route): string
     {
@@ -91,7 +91,7 @@ class TranslateLabel extends AbstractSubModule implements DataProviderInterface,
     /**
      * Creates the content for the "info" section ("module") of the Admin Panel
      *
-     * @param \TYPO3\CMS\Adminpanel\ModuleApi\ModuleData $data
+     * @param ModuleData $data
      * @return string HTML content for the section. Consists of a string with table-rows with four columns.
      * @see display()
      */

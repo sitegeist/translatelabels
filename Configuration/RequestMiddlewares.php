@@ -1,8 +1,10 @@
 <?php
+
+use Sitegeist\Translatelabels\Middleware\CreateLabelResolver;
 return [
     'backend' => [
         'sitegeist/translatelabels/create-label-resolver' => [
-            'target' => Sitegeist\Translatelabels\Middleware\CreateLabelResolver::class,
+            'target' => CreateLabelResolver::class,
             'after' => [
                 'typo3/cms-backend/authentication',
             ],

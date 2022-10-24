@@ -10,7 +10,9 @@ namespace Sitegeist\Translatelabels\Utility;
  * LICENSE file that was distributed with this source code.
  *
  */
-
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use Psr\Http\Message\ServerRequestInterface;
 use Sitegeist\Translatelabels\Domain\Model\Translation;
 use TYPO3\CMS\Backend\Exception;
@@ -87,7 +89,7 @@ class TranslationLabelUtility
      * @param $labelKey
      * @param $translation
      * @throws \TYPO3\CMS\Extbase\Object\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws IllegalObjectTypeException
      */
     public static function createLabel($labelKey, $translation)
     {
@@ -138,7 +140,7 @@ class TranslationLabelUtility
      * @param string $labelKey
      * @param string $extensionName
      * @return bool
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws AspectNotFoundException
      */
     public static function isFrontendWithLoggedInBEUser($labelKey = '', $extensionName = '')
     {
@@ -156,7 +158,7 @@ class TranslationLabelUtility
             );
         }
         return ($isLoggedIn !== 0
-            && TYPO3_MODE === 'FE'
+            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()
             && strpos($labelKey, 'adminpanel') !== 0
             && $extensionName !== 'adminpanel'
             && $showTranslationLabels === '1'
