@@ -18,7 +18,6 @@ use Sitegeist\Translatelabels\Domain\Model\Translation;
 use TYPO3\CMS\Backend\Exception;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Core\Context\Context;
 use Sitegeist\Translatelabels\Domain\Repository\TranslationRepository;
