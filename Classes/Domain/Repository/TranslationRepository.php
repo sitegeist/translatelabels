@@ -3,6 +3,7 @@ namespace Sitegeist\Translatelabels\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+
 /**
  *
  * This file is part of the "translatelabels" Extension for TYPO3 CMS.

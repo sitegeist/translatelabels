@@ -172,7 +172,8 @@ class TranslationLabelUtility
      * @param $extensionName
      * @return string
      */
-    public static function getDefaultLanguageFile($extensionName) {
+    public static function getDefaultLanguageFile($extensionName)
+    {
         return GeneralUtility::camelCaseToLowerCaseUnderscored($extensionName) . '/Resources/Private/Language/locallang.xlf';
     }
 
@@ -200,7 +201,7 @@ class TranslationLabelUtility
     public static function getLabelKeyWithoutPrefixes($labelKey)
     {
         // remove leading 'LLL:'
-        $labelKey = (strpos($labelKey,'LLL:') === 0) ? substr($labelKey, 4) : $labelKey;
+        $labelKey = (strpos($labelKey, 'LLL:') === 0) ? substr($labelKey, 4) : $labelKey;
         // remove leading 'EXT:'
         $labelKey = (strpos($labelKey, 'EXT:') === 0) ? substr($labelKey, 4) : $labelKey;
         return $labelKey;

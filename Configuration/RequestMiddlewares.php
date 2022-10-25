@@ -1,6 +1,7 @@
 <?php
 
 use Sitegeist\Translatelabels\Middleware\CreateLabelResolver;
+
 return [
     'backend' => [
         'sitegeist/translatelabels/create-label-resolver' => [

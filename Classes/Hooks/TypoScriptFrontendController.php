@@ -38,8 +38,7 @@ class TypoScriptFrontendController
     public function contentPostProcAll(
         array &$params,
         \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $ref
-    )
-    {
+    ) {
         if (TranslationLabelUtility::isFrontendWithLoggedInBEUser()) {
             $sysFolderWithTranslationsUid = TranslationLabelUtility::getStoragePid();
             if ($sysFolderWithTranslationsUid === null) {
