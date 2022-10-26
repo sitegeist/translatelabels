@@ -140,7 +140,6 @@ class AjaxController
 
                 // no translation record found => create one
                 return new JsonResponse(['status' => 'ok', 'message' => $successMessage, 'action' => 'new']);
-
             }
             return new JsonResponse(['status' => 'ok', 'message' => $successMessage, 'action' => 'unmodified', 'uid' => $translation['uid']]);
         } catch (\Exception $e) {

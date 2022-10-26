@@ -25,7 +25,8 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  */
 
-class FrontendRenderer {
+class FrontendRenderer
+{
 
     // single quote ' is escaped in fluid inside of tag attributes to &#039;
     // so we have to look out for single quotes as either ' or &#039;
@@ -42,14 +43,15 @@ class FrontendRenderer {
      * @throws RouteNotFoundException
      * @throws AspectNotFoundException
      */
-    public function parseLabelTags(string $content, int $sysFolderWithTranslationsUid) : array {
+    public function parseLabelTags(string $content, int $sysFolderWithTranslationsUid) : array
+    {
         $labelTags = [];
         if (preg_match_all(self::getRegexForLLLMarker(), $content, $matches)) {
             $countLabels = \count($matches[0]);
             $keys = [];
             for ($i = 0; $i < $countLabels; $i++) {
                 // clean quoting of slashes from json encoding in labels in attribute values
-                $currentKey = str_replace('\/','/',$matches[2][$i]);
+                $currentKey = str_replace('\/', '/', $matches[2][$i]);
                 if (!in_array($currentKey, $keys)) { // each label/key only once!
                     $labelTags[] = [
                         'key' => $currentKey,
@@ -84,7 +86,8 @@ class FrontendRenderer {
      * @return string
      * @throws Exception
      */
-    public function substituteLabelsInsideTags(string $content) : string {
+    public function substituteLabelsInsideTags(string $content) : string
+    {
 
         // find all labels inside of tag attributes (but not the ones outside of tags)
         // finds one or more labels inside of tag attribute values
@@ -97,7 +100,7 @@ class FrontendRenderer {
         */
 
         $content = preg_replace_callback(
-            self::getRegexForLLLMarker('.*?','(<[^>]*?)(',')(.*?)(\/?>)'),
+            self::getRegexForLLLMarker('.*?', '(<[^>]*?)(', ')(.*?)(\/?>)'),
             // iterate through each tag containing at least one LLL marker, f.e. '<img/>'
             function ($matches) {
                 $attributesToTranslate = [];
@@ -105,7 +108,7 @@ class FrontendRenderer {
                 $search = '/([\w-]+)\s*=\s*"([^"]*)"/si';
                 $attributeValueContent = preg_replace_callback(
                     $search,
-                    function($attributeMatches) use (&$attributesToTranslate) {
+                    function ($attributeMatches) use (&$attributesToTranslate) {
                         // iterate over each value and replace all its LLL: markers
                         $attributesToTranslate = [];
                         $labelCounter = -1;
@@ -134,7 +137,7 @@ class FrontendRenderer {
             },
             $content
         );
-        if($content === null) {
+        if ($content === null) {
             throw new Exception(preg_last_error_msg(), preg_last_error());
         }
         return $content;
@@ -152,14 +155,15 @@ class FrontendRenderer {
      * @throws RouteNotFoundException
      * @throws AspectNotFoundException
      */
-    public function substituteLabels($content, $message) : string {
+    public function substituteLabels($content, $message) : string
+    {
 
         /*
         $search = '/(LLL:\(' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . ',' . $quote . '(.*?)' . $quote . '\))/i';
         */
 
         $content = preg_replace_callback(
-            self::getRegexForLLLMarker('(.*?)','(',')'),
+            self::getRegexForLLLMarker('(.*?)', '(', ')'),
             function ($matches) use ($message) {
                 return $this->renderLabelAsTooltip(
                     $matches[3], // key
@@ -169,7 +173,7 @@ class FrontendRenderer {
             },
             $content
         );
-        if($content === null) {
+        if ($content === null) {
             throw new Exception(preg_last_error_msg(), preg_last_error());
         }
         return $content;
@@ -184,7 +188,8 @@ class FrontendRenderer {
      * @param string $modifier
      * @return string
      */
-    protected static function getRegexForLLLMarker(string $regexForParameterValue = self::REGEX_PARAMETERVALUE, string $prefix = '', string $suffix = '', string $modifier = 'si') : string {
+    protected static function getRegexForLLLMarker(string $regexForParameterValue = self::REGEX_PARAMETERVALUE, string $prefix = '', string $suffix = '', string $modifier = 'si') : string
+    {
         $paramExpression = self::REGEX_QUOTE . $regexForParameterValue . self::REGEX_QUOTE;
         $numberOfParameters = 5;
         $paramExpressionList = implode(',', array_fill(0, $numberOfParameters, $paramExpression));

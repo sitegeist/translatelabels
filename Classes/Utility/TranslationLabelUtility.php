@@ -18,7 +18,6 @@ use Sitegeist\Translatelabels\Domain\Model\Translation;
 use TYPO3\CMS\Backend\Exception;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Core\Context\Context;
 use Sitegeist\Translatelabels\Domain\Repository\TranslationRepository;
@@ -173,7 +172,8 @@ class TranslationLabelUtility
      * @param $extensionName
      * @return string
      */
-    public static function getDefaultLanguageFile($extensionName) {
+    public static function getDefaultLanguageFile($extensionName)
+    {
         return GeneralUtility::camelCaseToLowerCaseUnderscored($extensionName) . '/Resources/Private/Language/locallang.xlf';
     }
 
@@ -201,7 +201,7 @@ class TranslationLabelUtility
     public static function getLabelKeyWithoutPrefixes($labelKey)
     {
         // remove leading 'LLL:'
-        $labelKey = (strpos($labelKey,'LLL:') === 0) ? substr($labelKey, 4) : $labelKey;
+        $labelKey = (strpos($labelKey, 'LLL:') === 0) ? substr($labelKey, 4) : $labelKey;
         // remove leading 'EXT:'
         $labelKey = (strpos($labelKey, 'EXT:') === 0) ? substr($labelKey, 4) : $labelKey;
         return $labelKey;

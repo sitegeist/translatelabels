@@ -174,7 +174,6 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
                 $property
             );
             $ret = self::renderTranslation($translationKey, $ret, $translationArguments);
-
         }
         return $ret;
     }

@@ -2,6 +2,7 @@
 namespace Sitegeist\Translatelabels\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  *
  * This file is part of the "translatelabels" Extension for TYPO3 CMS.
