@@ -37,5 +37,10 @@
         "typo3/cms": {
             "extension-key": "translatelabels"
         }
+    },
+    "scripts": {
+        "prepare-release": [
+            "rm -r .github Tests"
+        ]
     }
 }
