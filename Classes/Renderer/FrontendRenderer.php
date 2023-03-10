@@ -222,6 +222,7 @@ class FrontendRenderer
             }
         }
         $pluginName = (strpos($extensionName, 'tx_') === 0) ? $extensionName : 'tx_' . strtolower($extensionName);
+        $typoScriptOverride = [];
         if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][$pluginName . '.']['_LOCAL_LANG.'][$languageKey . '.']) &&
             is_array($GLOBALS['TSFE']->tmpl->setup['plugin.'][$pluginName . '.']['_LOCAL_LANG.'][$languageKey . '.'])) {
             $typoScriptOverride = ArrayUtility::flatten(
@@ -229,7 +230,7 @@ class FrontendRenderer
                 '.'
             );
         }
-        if ($typoScriptOverride['.' . $labelName]) {
+        if (!empty($typoScriptOverride['.' . $labelName])) {
             $overrides[] = ['TypoScript' , 'plugin.' . $pluginName . '._LOCAL_LANG.' . $languageKey . '.' . $labelName];
         }
         if (TranslationLabelUtility::getLabelFromDatabase($labelKey, $pid) !== null) {
