@@ -87,7 +87,7 @@ class TranslateLabelInfo extends AbstractSubModule implements DataProviderInterf
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         return new ModuleData(
             [
-                'labels' => $GLOBALS['TRANSLATELABELS'],
+                'labels' => $GLOBALS['TRANSLATELABELS'] ?? [],
                 'showTranslateLabels' => $this->configurationService->getConfigurationOption('translatelabels', 'showTranslationLabels'),
                 'editIcon' => $iconFactory->getIcon('actions-open', Icon::SIZE_SMALL)->render()
             ]
