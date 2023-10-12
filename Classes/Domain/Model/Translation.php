@@ -42,6 +42,10 @@ class Translation extends AbstractEntity
      */
     protected $l10n_parent = 0;
 
+    protected $starttime = 0;
+
+    protected $endtime = 0;
+
     /**
      * Returns the labelkey
      *
@@ -134,5 +138,25 @@ class Translation extends AbstractEntity
     public function setL10nParent($l10nParent)
     {
         $this->l10n_parent = $l10nParent;
+    }
+
+    public function getStarttime(): int
+    {
+        return $this->starttime;
+    }
+
+    public function setStarttime(int $starttime): void
+    {
+        $this->starttime = $starttime;
+    }
+
+    public function getEndtime(): int
+    {
+        return $this->endtime;
+    }
+
+    public function setEndtime(int $endtime): void
+    {
+        $this->endtime = $endtime;
     }
 }

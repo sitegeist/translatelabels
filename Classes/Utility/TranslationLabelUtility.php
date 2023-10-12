@@ -10,6 +10,13 @@ namespace Sitegeist\Translatelabels\Utility;
  * LICENSE file that was distributed with this source code.
  *
  */
+
+use Kanti\ServerTiming\Utility\TimingUtility;
+use phpDocumentor\Reflection\Types\This;
+use TYPO3\CMS\Core\Cache\Backend\BackendInterface;
+use TYPO3\CMS\Core\Cache\Backend\FileBackend;
+use TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Http\ApplicationType;
@@ -25,6 +32,8 @@ use TYPO3\CMS\Adminpanel\Service\ConfigurationService;
 
 class TranslationLabelUtility
 {
+    protected static ?array $labelCache = null;
+    protected static int $languageUid = 0;
     /**
      * returns storagePid where to store translation records
      *
@@ -56,32 +65,79 @@ class TranslationLabelUtility
     {
         $translation = self::getLabelFromDatabase($labelKey, self::getStoragePid());
         if ($translation !== null) {
-            $fallBackTranslation = $translation->getTranslation();
+            $fallBackTranslation = $translation;
+//            $fallBackTranslation = $translation->getTranslation();
         }
         return $fallBackTranslation;
     }
 
     /**
-     * @param string $labelKey         Translation Key
-     * @param int $pid                 pid of sysfolder where to search for translation records (needed for calls from BE)
-     * @param int | null $languageUid  uid of language of translation label, null means current language
-
+     * @param string $labelKey Translation Key
+     * @param int $pid pid of sysfolder where to search for translation records (needed for calls from BE)
+     * @param int | null $languageUid uid of language of translation label, null means current language
      * @return object                  translation from database or null if it doesn't exist
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public static function getLabelFromDatabase(string $labelKey, int $pid, int $languageUid = null)
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        /**
-         * @var $translationRepository TranslationRepository
-         */
-        $translationRepository = $objectManager->get(TranslationRepository::class);
-        if ($languageUid === null) {
-            $translation = $translationRepository->findOneByLabelKeyInPid($labelKey, $pid);
-        } else {
-            $translation = $translationRepository->findOneByLabelKeyInLanguageInPid($labelKey, $languageUid, $pid);
+        $stop = TimingUtility::stopWatch('getLabelFromDatabase');
+
+        if (!self::$labelCache) {
+
+            $cache ??= GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class)->getCache('translatelabels_cache');
+            $cacheIdentifier = (string)$pid;
+
+            $cacheValue = $cache->require($cacheIdentifier);
+            if ($cacheValue === false) {
+                $stop2 = TimingUtility::stopWatch('createLabelCache', $cacheIdentifier);
+
+                $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+                /**
+                 * @var $translationRepository TranslationRepository
+                 */
+                $translationRepository = $objectManager->get(TranslationRepository::class);
+                $cacheLifetime = PHP_INT_MAX;
+                $result = $translationRepository->findAllByPid($pid)->toArray();
+                $cacheValue = [];
+                /** @var Translation $translation */
+                foreach ($result as $translation) {
+                    $cacheValue[$translation->getLabelkey()][$translation->getLanguageUid()] = $translation->getTranslation();
+                    if ($translation->getStarttime() > $GLOBALS['EXEC_TIME']) {
+                        $cacheLifetime = min($cacheLifetime, $translation->getStarttime());
+                    }
+                    if ($translation->getEndtime() > $GLOBALS['EXEC_TIME']) {
+                        $cacheLifetime = min($cacheLifetime, $translation->getEndtime());
+                    }
+                }
+                $cache->set($cacheIdentifier,'return ' . var_export($cacheValue, true) . ';', [], $cacheLifetime !== PHP_INT_MAX ? ($cacheLifetime - $GLOBALS['EXEC_TIME']) : 0);
+                $stop2();
+            }
+            self::$labelCache = $cacheValue;
         }
-        return $translation;
+
+        if (!self::$languageUid && !$languageUid) {
+            $context = GeneralUtility::makeInstance(Context::class);
+            self::$languageUid = $context->getPropertyFromAspect('language', 'id');
+        }
+
+        $stop();
+
+        return self::$labelCache[$labelKey][$languageUid ?? self::$languageUid] ?? self::$labelCache[$labelKey][-1] ?? null;
+
+
+//        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+//        /**
+//         * @var $translationRepository TranslationRepository
+//         */
+//        $translationRepository = $objectManager->get(TranslationRepository::class);
+//
+//        if ($languageUid === null) {
+//            $translation = $translationRepository->findOneByLabelKeyInPid($labelKey, $pid);
+//        } else {
+//            $translation = $translationRepository->findOneByLabelKeyInLanguageInPid($labelKey, $languageUid, $pid);
+//        }
+//        $stop();
+//        return $translation;
     }
 
     /**
