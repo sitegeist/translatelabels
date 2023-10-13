@@ -89,6 +89,8 @@ class TranslationRepository extends Repository
         $query->getQuerySettings()
             ->setRespectSysLanguage(false)
             ->setLanguageOverlayMode(false)
+            ->setIgnoreEnableFields(true)
+            ->setEnableFieldsToBeIgnored(['starttime', 'endtime'])
             ->setRespectStoragePage(false);
 
         $constraints = $query->logicalAnd(

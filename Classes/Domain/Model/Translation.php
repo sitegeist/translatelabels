@@ -42,8 +42,14 @@ class Translation extends AbstractEntity
      */
     protected $l10n_parent = 0;
 
+    /**
+     * @var int
+     */
     protected $starttime = 0;
 
+    /**
+     * @var int
+     */
     protected $endtime = 0;
 
     /**
