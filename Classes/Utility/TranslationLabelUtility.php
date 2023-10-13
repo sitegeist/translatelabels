@@ -11,7 +11,6 @@ namespace Sitegeist\Translatelabels\Utility;
  *
  */
 
-use Kanti\ServerTiming\Utility\TimingUtility;
 use phpDocumentor\Reflection\Types\This;
 use TYPO3\CMS\Core\Cache\Backend\BackendInterface;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
