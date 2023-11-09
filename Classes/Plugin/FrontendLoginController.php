@@ -86,7 +86,7 @@ class FrontendLoginController extends \TYPO3\CMS\Felogin\Controller\FrontendLogi
         $id =  TranslationLabelUtility::getLabelKeyWithoutPrefixes($this->languageFilePath . ':' . $key);
 
         $label = TranslationLabelUtility::readLabelFromDatabase($id, $label);
-        if (TranslationLabelUtility::isFrontendWithLoggedInBEUser($id)) {
+        if (TranslationLabelUtility::meetsRenderingConditionsForExtendedInformation($id)) {
             $label = TranslationLabelUtility::renderTranslationWithExtendedInformation($id, $label, $this->prefixId);
         }
 

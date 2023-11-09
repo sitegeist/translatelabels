@@ -39,7 +39,7 @@ class TypoScriptFrontendController
         array &$params,
         \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $ref
     ) {
-        if ($ref->isINTincScript() || !TranslationLabelUtility::isFrontendWithLoggedInBEUser()) {
+        if ($ref->isINTincScript() || !TranslationLabelUtility::meetsRenderingConditionsForExtendedInformation()) {
             return;
         }
 

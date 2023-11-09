@@ -47,7 +47,7 @@ trait RenderTranslation
                     count($translateArguments)
                 );
             }
-            if (TranslationLabelUtility::isFrontendWithLoggedInBEUser($id)) {
+            if (TranslationLabelUtility::meetsRenderingConditionsForExtendedInformation($id)) {
                 $value = TranslationLabelUtility::renderTranslationWithExtendedInformation(
                     $id,
                     $value,

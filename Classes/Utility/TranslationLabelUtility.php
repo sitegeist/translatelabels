@@ -141,7 +141,7 @@ class TranslationLabelUtility
      * @return bool
      * @throws AspectNotFoundException
      */
-    public static function isFrontendWithLoggedInBEUser($labelKey = '', $extensionName = '')
+    public static function meetsRenderingConditionsForExtendedInformation($labelKey = '', $extensionName = '')
     {
         $showTranslationLabels = false;
 
