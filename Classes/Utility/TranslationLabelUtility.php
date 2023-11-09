@@ -14,7 +14,9 @@ use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Sitegeist\Translatelabels\Domain\Model\Translation;
+use Sitegeist\Translatelabels\Event\CheckedRenderingConditionsEvent;
 use TYPO3\CMS\Backend\Exception;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -142,6 +144,32 @@ class TranslationLabelUtility
      * @throws AspectNotFoundException
      */
     public static function meetsRenderingConditionsForExtendedInformation($labelKey = '', $extensionName = '')
+    {
+        if (!$labelKey) {
+            $labelKey = '';
+        }
+        if (!$extensionName) {
+            $extensionName = '';
+        }
+
+        $showTranslationLabels = self::checkRenderingConditionsForExtendedInformation($labelKey, $extensionName);
+
+        $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
+        /** @var CheckedRenderingConditionsEvent $event */
+        $event = $eventDispatcher->dispatch(
+            new CheckedRenderingConditionsEvent($showTranslationLabels, $labelKey, $extensionName)
+        );
+
+        return $event->getShowTranslationLabels();
+    }
+
+    /**
+     * @param string $labelKey
+     * @param string $extensionName
+     * @return bool
+     * @throws AspectNotFoundException
+     */
+    private static function checkRenderingConditionsForExtendedInformation($labelKey, $extensionName)
     {
         $showTranslationLabels = false;
 
