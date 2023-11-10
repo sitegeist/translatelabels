@@ -171,29 +171,39 @@ class TranslationLabelUtility
      */
     private static function checkRenderingConditionsForExtendedInformation($labelKey, $extensionName)
     {
-        $showTranslationLabels = false;
+        if ($extensionName == 'adminpanel' || strpos($labelKey, 'adminpanel') === 0) {
+            return false;
+        }
 
-        /** @var ServerRequestInterface $request */
-        $request = $GLOBALS['TYPO3_REQUEST'] ?? ServerRequestFactory::fromGlobals();
+        if (!ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
+            return false;
+        }
+
         $context = GeneralUtility::makeInstance(Context::class);
         $isLoggedIn = $context->getPropertyFromAspect('backend.user', 'id');
-        if ($isLoggedIn) {
-            $adminPanelConfigurationService = GeneralUtility::makeInstance(ConfigurationService::class);
-            $showTranslationLabels = $adminPanelConfigurationService->getConfigurationOption(
-                'translatelabels',
-                'showTranslationLabels'
-            );
+        if (!$isLoggedIn) {
+            return false;
         }
-        return ($isLoggedIn !== 0
-            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()
-            && strpos($labelKey, 'adminpanel') !== 0
-            && $extensionName !== 'adminpanel'
-            && $showTranslationLabels === '1'
-            // only for uncached pages as no_cache is set by admin panel
-            // otherwise we could generate LLL tags into cached pages and will not replace them
-            // in FE if no BE user is logged-in.
-            && $request->getAttribute('noCache') === true
+
+        $adminPanelConfigurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        $showTranslationLabels = $adminPanelConfigurationService->getConfigurationOption(
+            'translatelabels',
+            'showTranslationLabels'
         );
+        if (!$showTranslationLabels == 1) {
+            return false;
+        }
+
+        // only for uncached pages as no_cache is set by admin panel
+        // otherwise we could generate LLL tags into cached pages and will not replace them
+        // in FE if no BE user is logged-in.
+        /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? ServerRequestFactory::fromGlobals();
+        if (!$request->getAttribute('noCache') === true) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
