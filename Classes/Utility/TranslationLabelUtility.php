@@ -24,6 +24,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Core\Context\Context;
 use Sitegeist\Translatelabels\Domain\Repository\TranslationRepository;
 use TYPO3\CMS\Adminpanel\Service\ConfigurationService;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 class TranslationLabelUtility
 {
@@ -140,10 +141,11 @@ class TranslationLabelUtility
     /**
      * @param string $labelKey
      * @param string $extensionName
+     * @param RenderingContextInterface $renderingContext
      * @return bool
      * @throws AspectNotFoundException
      */
-    public static function meetsRenderingConditionsForExtendedInformation($labelKey = '', $extensionName = '')
+    public static function meetsRenderingConditionsForExtendedInformation($labelKey = '', $extensionName = '', $renderingContext = null)
     {
         if (!$labelKey) {
             $labelKey = '';
@@ -157,10 +159,12 @@ class TranslationLabelUtility
         $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
         /** @var CheckedRenderingConditionsEvent $event */
         $event = $eventDispatcher->dispatch(
-            new CheckedRenderingConditionsEvent($showTranslationLabels, $labelKey, $extensionName)
+            new CheckedRenderingConditionsEvent($showTranslationLabels, $labelKey, $extensionName, $renderingContext)
         );
 
-        return $event->getShowTranslationLabels();
+        $showTranslationLabels = $event->getShowTranslationLabels();
+
+        return $showTranslationLabels;
     }
 
     /**
