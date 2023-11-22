@@ -70,6 +70,6 @@ class TranslateElementErrorViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Transl
         if ($originalTranslation === '') {
             $originalTranslation = $defaultValue;
         }
-        return self::renderTranslation($translationKey, $originalTranslation, $errorArguments);
+        return self::renderTranslation($translationKey, $originalTranslation, $errorArguments, $renderingContext);
     }
 }

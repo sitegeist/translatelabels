@@ -14,7 +14,9 @@ use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Sitegeist\Translatelabels\Domain\Model\Translation;
+use Sitegeist\Translatelabels\Event\CheckedRenderingConditionsEvent;
 use TYPO3\CMS\Backend\Exception;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -22,6 +24,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Core\Context\Context;
 use Sitegeist\Translatelabels\Domain\Repository\TranslationRepository;
 use TYPO3\CMS\Adminpanel\Service\ConfigurationService;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 class TranslationLabelUtility
 {
@@ -138,34 +141,73 @@ class TranslationLabelUtility
     /**
      * @param string $labelKey
      * @param string $extensionName
+     * @param RenderingContextInterface $renderingContext
      * @return bool
      * @throws AspectNotFoundException
      */
-    public static function isFrontendWithLoggedInBEUser($labelKey = '', $extensionName = '')
+    public static function meetsRenderingConditionsForExtendedInformation($labelKey = '', $extensionName = '', $renderingContext = null)
     {
-        $showTranslationLabels = false;
+        if (!$labelKey) {
+            $labelKey = '';
+        }
+        if (!$extensionName) {
+            $extensionName = '';
+        }
 
-        /** @var ServerRequestInterface $request */
-        $request = $GLOBALS['TYPO3_REQUEST'] ?? ServerRequestFactory::fromGlobals();
+        $showTranslationLabels = self::checkRenderingConditionsForExtendedInformation($labelKey, $extensionName);
+
+        $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
+        /** @var CheckedRenderingConditionsEvent $event */
+        $event = $eventDispatcher->dispatch(
+            new CheckedRenderingConditionsEvent($showTranslationLabels, $labelKey, $extensionName, $renderingContext)
+        );
+
+        $showTranslationLabels = $event->getShowTranslationLabels();
+
+        return $showTranslationLabels;
+    }
+
+    /**
+     * @param string $labelKey
+     * @param string $extensionName
+     * @return bool
+     * @throws AspectNotFoundException
+     */
+    private static function checkRenderingConditionsForExtendedInformation($labelKey, $extensionName)
+    {
+        if ($extensionName == 'adminpanel' || strpos($labelKey, 'adminpanel') === 0) {
+            return false;
+        }
+
+        if (!ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
+            return false;
+        }
+
         $context = GeneralUtility::makeInstance(Context::class);
         $isLoggedIn = $context->getPropertyFromAspect('backend.user', 'id');
-        if ($isLoggedIn) {
-            $adminPanelConfigurationService = GeneralUtility::makeInstance(ConfigurationService::class);
-            $showTranslationLabels = $adminPanelConfigurationService->getConfigurationOption(
-                'translatelabels',
-                'showTranslationLabels'
-            );
+        if (!$isLoggedIn) {
+            return false;
         }
-        return ($isLoggedIn !== 0
-            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()
-            && strpos($labelKey, 'adminpanel') !== 0
-            && $extensionName !== 'adminpanel'
-            && $showTranslationLabels === '1'
-            // only for uncached pages as no_cache is set by admin panel
-            // otherwise we could generate LLL tags into cached pages and will not replace them
-            // in FE if no BE user is logged-in.
-            && $request->getAttribute('noCache') === true
+
+        $adminPanelConfigurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        $showTranslationLabels = $adminPanelConfigurationService->getConfigurationOption(
+            'translatelabels',
+            'showTranslationLabels'
         );
+        if (!$showTranslationLabels == 1) {
+            return false;
+        }
+
+        // only for uncached pages as no_cache is set by admin panel
+        // otherwise we could generate LLL tags into cached pages and will not replace them
+        // in FE if no BE user is logged-in.
+        /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? ServerRequestFactory::fromGlobals();
+        if (!$request->getAttribute('noCache') === true) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

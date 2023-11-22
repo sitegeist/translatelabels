@@ -143,7 +143,7 @@ class TranslateViewHelper extends AbstractViewHelper
             if (\is_array($translateArguments) && $value !== null) {
                 $value = sprintf($value, ...array_values($translateArguments)) ?: sprintf('Error: could not translate key "%s" with value "%s" and %d argument(s)!', $key, $value, count($translateArguments));
             }
-            if (TranslationLabelUtility::isFrontendWithLoggedInBEUser($id, $extensionName)) {
+            if (TranslationLabelUtility::meetsRenderingConditionsForExtendedInformation($id, $extensionName, $renderingContext)) {
                 $value = TranslationLabelUtility::renderTranslationWithExtendedInformation($id, $value, $extensionName, $translateArguments, $arguments['languageKey'], $arguments['alternativeLanguageKeys']);
             }
         }

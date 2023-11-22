@@ -31,8 +31,12 @@ trait RenderTranslation
         return $array;
     }
 
-    public static function renderTranslation(string $translationKey, string $value, array $translateArguments)
-    {
+    public static function renderTranslation(
+        string $translationKey,
+        string $value,
+        array $translateArguments,
+        RenderingContextInterface $renderingContext = null
+    ) {
 
         if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend() && $value !== '') {
             // language files in chain of form framework are without LLL:, all others use this prefix
@@ -47,7 +51,7 @@ trait RenderTranslation
                     count($translateArguments)
                 );
             }
-            if (TranslationLabelUtility::isFrontendWithLoggedInBEUser($id)) {
+            if (TranslationLabelUtility::meetsRenderingConditionsForExtendedInformation($id, '', $renderingContext)) {
                 $value = TranslationLabelUtility::renderTranslationWithExtendedInformation(
                     $id,
                     $value,

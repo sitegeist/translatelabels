@@ -30,7 +30,7 @@ class ReplaceLabels implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
-        if (!$GLOBALS['TSFE']->isINTincScript() || $response instanceof NullResponse || !TranslationLabelUtility::isFrontendWithLoggedInBEUser()) {
+        if (!$GLOBALS['TSFE']->isINTincScript() || $response instanceof NullResponse || !TranslationLabelUtility::meetsRenderingConditionsForExtendedInformation()) {
             return $response;
         }
 

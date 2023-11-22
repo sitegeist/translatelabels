@@ -142,11 +142,12 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
                     $ret[$key] = self::renderTranslation(
                         $translationKey . '.' . $key,
                         (string)$value,
-                        $translationArguments
+                        $translationArguments,
+                        $renderingContext
                     );
                 }
             } else {
-                $ret = self::renderTranslation($translationKey, $ret, $translationArguments);
+                $ret = self::renderTranslation($translationKey, $ret, $translationArguments, $renderingContext);
             }
         } elseif (\is_array($property) && $property[0] === 'items') {
             // new parameter: options is array auf key-value pairs
@@ -161,7 +162,7 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
                     'options',
                     $key
                 );
-                $ret[$key] = self::renderTranslation($translationKey, $value, $translationArguments);
+                $ret[$key] = self::renderTranslation($translationKey, $value, $translationArguments, $renderingContext);
             }
         } elseif ($propertyType === 'renderingOptions') {
             // for buttons, $property can be 'previousButtonLabel' or 'nextButtonLabel' or 'submitButtonLabel'
@@ -173,7 +174,7 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
                 $propertyType,
                 $property
             );
-            $ret = self::renderTranslation($translationKey, $ret, $translationArguments);
+            $ret = self::renderTranslation($translationKey, $ret, $translationArguments, $renderingContext);
         }
         return $ret;
     }
