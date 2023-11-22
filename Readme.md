@@ -45,7 +45,8 @@ The development and the public-releases of this package is generously sponsored 
 ## Supported TYPO3 Versions
 
 * Version 1.x of this extension supports TYPO3 9.5.
-* Version 2.x of this extension supports TYPO3 10.1 and 11.5.
+* Version 2.0 of this extension supports TYPO3 10
+* Version 2.1 of this extension supports TYPO3 11.
 
 ## How to install
 
@@ -56,7 +57,7 @@ composer:
     ```
     composer require sitegeist/translatelabels:^1
     ```
-  - For TYPO3 10.0 and 10.1:
+  - Starting from TYPO3 10.0:
     ```
     composer require sitegeist/translatelabels
     ```
@@ -85,7 +86,7 @@ Be aware that this setting has to be defined for all pages using
 this extension and also for all sysfolders containing the translation
 records.
 
-## TYPO3 patch needed (bug #87038) 
+## TYPO3 patch needed for TYPO3 version 9.5 and 10.1 (bug #87038) 
 
 Due to the not yet fixed bug https://forge.typo3.org/issues/87038 in 
 TYPO3 9.5.9 and TYPO3 10.1 you have to apply a patch to your TYPO3 sources at present.
@@ -110,20 +111,22 @@ default language.
 | 1.1.x           | 9.5.x  | Removed LLL:EXT: prefix from label keys |
 | 2.0.x           | 10.1.x | Compatibility for TYPO3 10.1            |
 | 2.1.x           | 11.5.x | Compatibility for TYPO3 11.5            |
+| 2.3.0           | 11.5.x | Compatibility for PHP 8.1               |
+| 2.3.2           | 11.5.x | Added event dispatcher to show translate labels or not |
 
 ## How to activate for BE users
 
 1. [Enable admin panel for BE users.](https://docs.typo3.org/m/typo3/reference-tsconfig/9.5/en-us/UserTsconfig/AdmPanel.html)
   1.1 Set `admPanel.enable.all = 1` in User TSconfig or `admPanel.enable.translatelabels = 1`
   1.2 Set `config.admPanel = 1` in TypoScript Template
-2. Login into BE and open FE afterwards.
+2. Login into BE and open FE afterward.
 3. Click on Settings in the bottom right of admin panel.
 4. Activate "Show translation labels" in settings and click on "Update
 settings".
 5. After that you will see all labels in FE underlined with a red dashed
 line having a tool tip with the link to the language file and its
 key.
-6. Furthermore you will see a list of all used labels of the current page
+6. Furthermore, you will see a list of all used labels of the current page
 in Admin Panel in tab "Translate Labels".
 
 ## Access rights to translate labels
