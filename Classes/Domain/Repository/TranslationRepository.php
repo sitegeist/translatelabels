@@ -81,4 +81,26 @@ class TranslationRepository extends Repository
         $result = $query->matching($constraints)->execute();
         return $result->getFirst();
     }
+
+    public function findAllByPid(int $pid)
+    {
+        $query = $this->createQuery();
+
+        $query->getQuerySettings()
+            ->setRespectSysLanguage(false)
+            ->setLanguageOverlayMode(false)
+            ->setIgnoreEnableFields(true)
+            ->setEnableFieldsToBeIgnored(['starttime', 'endtime'])
+            ->setRespectStoragePage(false);
+
+        $constraints = $query->logicalAnd(
+            [
+                $query->equals('pid', $pid),
+                $query->equals('hidden', false)
+            ]
+        );
+
+        $result = $query->matching($constraints)->execute();
+        return $result;
+    }
 }
