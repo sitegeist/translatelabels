@@ -126,6 +126,7 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
             $property === 'elementDescription' ||
             // $property === 'submitButtonLabel' ||
             $property === 'fluidAdditionalAttributes' ||
+            $property === 'prependOptionLabel' ||
             (\is_array($property) && $property[0] === 'options')
         ) {
             $translationKey = sprintf(
