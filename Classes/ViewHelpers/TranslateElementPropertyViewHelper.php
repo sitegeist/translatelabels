@@ -113,14 +113,6 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
 
         // $formIdentifier = $formRuntime->getIdentifier(); // <formname>-<pluginUid>
         $formIdentifier = $originalFormIdentifier; // <formname>
-        $translationKey = sprintf(
-            '%s:%s.element.%s.%s.%s',
-            $highestOrderLanguageFile,
-            $formIdentifier,
-            $element->getIdentifier(),
-            'properties',
-            self::getPropertyName($property)
-        );
         try {
             $translationArguments = ArrayUtility::getValueByPath(
                 $element->getRenderingOptions()['translation']['arguments'] ?? [],
@@ -130,13 +122,21 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
         } catch (MissingArrayPathException $e) {
             $translationArguments = [];
         }
-        $ret = parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
         if ($property === 'label' ||
             $property === 'elementDescription' ||
             // $property === 'submitButtonLabel' ||
             $property === 'fluidAdditionalAttributes' ||
             (\is_array($property) && $property[0] === 'options')
         ) {
+            $translationKey = sprintf(
+                '%s:%s.element.%s.%s.%s',
+                $highestOrderLanguageFile,
+                $formIdentifier,
+                $element->getIdentifier(),
+                'properties',
+                self::getPropertyName($property)
+            );
+            $ret = parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
             if (\is_array($ret)) {
                 foreach ($ret as $key => $value) {
                     $ret[$key] = self::renderTranslation(
@@ -174,7 +174,10 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
                 $propertyType,
                 $property
             );
+            $ret = parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
             $ret = self::renderTranslation($translationKey, $ret, $translationArguments, $renderingContext);
+        } else {
+            $ret = parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
         }
         return $ret;
     }
