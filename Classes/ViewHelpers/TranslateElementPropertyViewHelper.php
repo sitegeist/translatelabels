@@ -79,6 +79,9 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
         } else {
             if ($element instanceof FormElementInterface) {
                 try {
+                    if ($propertyParts[0] === 'items') {
+                        $propertyParts = ['options'];
+                    }
                     $defaultValue = ArrayUtility::getValueByPath($element->getProperties(), $propertyParts, '.');
                 } catch (MissingArrayPathException $exception) {
                     $defaultValue = null;
