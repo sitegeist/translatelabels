@@ -74,25 +74,6 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
             $propertyParts = [$property];
         }
 
-        if ($property === 'label') {
-            $defaultValue = $element->getLabel();
-        } else {
-            if ($element instanceof FormElementInterface) {
-                try {
-                    $defaultValue = ArrayUtility::getValueByPath($element->getProperties(), $propertyParts, '.');
-                } catch (MissingArrayPathException $exception) {
-                    $defaultValue = null;
-                }
-            } else {
-                $propertyType = 'renderingOptions';
-                try {
-                    $defaultValue = ArrayUtility::getValueByPath($renderingOptions, $propertyParts, '.');
-                } catch (MissingArrayPathException $exception) {
-                    $defaultValue = null;
-                }
-            }
-        }
-
         /** @var TYPO3\CMS\Form\FormRuntime $formRuntime */
         $formRuntime = $renderingContext
             ->getViewHelperVariableContainer()
