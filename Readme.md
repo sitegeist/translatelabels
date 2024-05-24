@@ -105,14 +105,15 @@ default language.
 
 ## Change Log
 
-| translatelabels | TYPO3  | Changes                                 |
-|-----------------|--------|-----------------------------------------|
-| 1.0.x           | 9.5.x  | Initial release                         |
-| 1.1.x           | 9.5.x  | Removed LLL:EXT: prefix from label keys |
-| 2.0.x           | 10.1.x | Compatibility for TYPO3 10.1            |
-| 2.1.x           | 11.5.x | Compatibility for TYPO3 11.5            |
-| 2.3.0           | 11.5.x | Compatibility for PHP 8.1               |
+| translatelabels | TYPO3  | Changes                                                |
+|-----------------|--------|--------------------------------------------------------|
+| 1.0.x           | 9.5.x  | Initial release                                        |
+| 1.1.x           | 9.5.x  | Removed LLL:EXT: prefix from label keys                |
+| 2.0.x           | 10.1.x | Compatibility for TYPO3 10.1                           |
+| 2.1.x           | 11.5.x | Compatibility for TYPO3 11.5                           |
+| 2.3.0           | 11.5.x | Compatibility for PHP 8.1                              |
 | 2.3.2           | 11.5.x | Added event dispatcher to show translate labels or not |
+| 2.3.5           | 11.5.x | Bugfix: PHP Warning: Array to string conversion        |                                               |
 
 ## How to activate for BE users
 
