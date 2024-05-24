@@ -48,4 +48,11 @@ call_user_func(function () {
 
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['translatelabels_translate']
         = \Sitegeist\Translatelabels\Controller\AjaxController::class . '::saveDataAction';
+
+
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['translatelabels_cache'] ??= [];
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['translatelabels_cache']['backend'] ??= \TYPO3\CMS\Core\Cache\Backend\FileBackend::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['translatelabels_cache']['frontend'] ??= \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class;
+
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = \Sitegeist\Translatelabels\Hooks\UpdateLabelsHook::class;
 });
