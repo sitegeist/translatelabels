@@ -43,16 +43,22 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
 
     use RenderTranslation;
 
-    protected static function getPropertyName($property)
+    protected static function getPropertyName(string|array $property): string
     {
-        return \is_array($property) ? implode('.', $property) : $property;
+        if (is_string($property)) {
+            return $property;
+        }
+
+        if (count($property) === count($property, COUNT_RECURSIVE)) {
+            return implode('.', $property);
+        }
+
+        return $property[0] ?? '';
     }
 
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
         $element = $arguments['element'];
-
-        $renderingOptions = $element->getRenderingOptions();
 
         $property = null;
         $propertyType = 'properties';
@@ -72,25 +78,6 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
             $propertyParts = $property;
         } else {
             $propertyParts = [$property];
-        }
-
-        if ($property === 'label') {
-            $defaultValue = $element->getLabel();
-        } else {
-            if ($element instanceof FormElementInterface) {
-                try {
-                    $defaultValue = ArrayUtility::getValueByPath($element->getProperties(), $propertyParts, '.');
-                } catch (MissingArrayPathException $exception) {
-                    $defaultValue = null;
-                }
-            } else {
-                $propertyType = 'renderingOptions';
-                try {
-                    $defaultValue = ArrayUtility::getValueByPath($renderingOptions, $propertyParts, '.');
-                } catch (MissingArrayPathException $exception) {
-                    $defaultValue = null;
-                }
-            }
         }
 
         /** @var TYPO3\CMS\Form\FormRuntime $formRuntime */
@@ -119,17 +106,18 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
             $formIdentifier,
             $element->getIdentifier(),
             'properties',
-            self::getPropertyName($property)
+            self::getPropertyName($property),
         );
-        try {
+
+        $translationArguments = [];
+        if (!empty($element->getRenderingOptions()['translation']['arguments'])) {
             $translationArguments = ArrayUtility::getValueByPath(
                 $element->getRenderingOptions()['translation']['arguments'] ?? [],
-                $propertyParts,
+                $translationKey,
                 '.'
             );
-        } catch (MissingArrayPathException $e) {
-            $translationArguments = [];
         }
+
         $ret = parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
         if ($property === 'label' ||
             $property === 'elementDescription' ||
