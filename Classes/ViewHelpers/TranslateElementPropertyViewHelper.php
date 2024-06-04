@@ -72,14 +72,6 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
             $property = $arguments['renderingOptionProperty'];
         }
 
-        if (empty($property)) {
-            $propertyParts = [];
-        } elseif (\is_array($property)) {
-            $propertyParts = $property;
-        } else {
-            $propertyParts = [$property];
-        }
-
         /** @var TYPO3\CMS\Form\FormRuntime $formRuntime */
         $formRuntime = $renderingContext
             ->getViewHelperVariableContainer()
@@ -117,6 +109,12 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
                 '.'
             );
         }
+
+        /*
+         * Parent renderStatic will call TranslationService->translateFormElementValue(...).
+         * It can not handle properties that are multidimensional arrays.
+         */
+        $arguments['property'] = self::getPropertyName($property);
 
         $ret = parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
         if ($property === 'label' ||

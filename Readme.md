@@ -113,7 +113,8 @@ default language.
 | 2.1.x           | 11.5.x | Compatibility for TYPO3 11.5                           |
 | 2.3.0           | 11.5.x | Compatibility for PHP 8.1                              |
 | 2.3.2           | 11.5.x | Added event dispatcher to show translate labels or not |
-| 2.3.5           | 11.5.x | Bugfix: PHP Warning: Array to string conversion        |                                               |
+| 2.3.5           | 11.5.x | Bugfix: PHP Warning: Array to string conversion        |
+| 2.3.6           | 11.5.x | Bugfix: PHP Warning: Array to string conversion        |
 
 ## How to activate for BE users
 
