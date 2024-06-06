@@ -40,6 +40,7 @@
     },
     "scripts": {
         "prepare-release": [
+            "sed -i'' -e \"s/'version' => ''/'version' => '$(echo ${GITHUB_REF#refs/tags/} | sed 's/v//')'/\" ext_emconf.php",
             "rm -r .github Tests"
         ]
     }
