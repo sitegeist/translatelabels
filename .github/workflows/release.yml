@@ -13,6 +13,6 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
-      - uses: tomasnorre/typo3-upload-ter@v2.0.4
+      - uses: tomasnorre/typo3-upload-ter@v2.0.3
         with:
           api-token: ${{ secrets.TYPO3_API_TOKEN }}
