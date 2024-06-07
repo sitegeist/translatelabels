@@ -13,6 +13,6 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
-      - uses: sitegeist/typo3-upload-ter@v2
+      - uses: sitegeist/typo3-upload-ter@2.0.7
         with:
           api-token: ${{ secrets.TYPO3_API_TOKEN }}
