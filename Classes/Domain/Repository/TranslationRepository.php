@@ -24,6 +24,7 @@ class TranslationRepository extends Repository
          */
         $querySettings = $this->objectManager->get(Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(false);
+        $querySettings->setLanguageOverlayMode('hideNonTranslated');
         $this->setDefaultQuerySettings($querySettings);
     }
 
