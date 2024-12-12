@@ -22,6 +22,7 @@ div.translatelabels-ok-response {
 
 span.translatelabels-tooltip {
     border-bottom: 1px dashed red !important;
+    pointer-events: auto;
 }
 
 span.translatelabels-tooltip-inner {
