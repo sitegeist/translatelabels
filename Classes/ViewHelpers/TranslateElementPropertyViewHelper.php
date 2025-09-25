@@ -17,6 +17,8 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\Exception\MissingArrayPathException;
 use TYPO3\CMS\Form\Domain\Model\FormElements\FormElementInterface;
 use Sitegeist\Translatelabels\ViewHelpers\Traits\RenderTranslation;
+use TYPO3\CMS\Form\Domain\Model\Renderable\AbstractRenderable;
+use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
 
 /**
  * Class TranslateElementPropertyViewHelper
@@ -72,7 +74,13 @@ class TranslateElementPropertyViewHelper extends \TYPO3\CMS\Form\ViewHelpers\Tra
             $property = $arguments['renderingOptionProperty'];
         }
 
-        /** @var TYPO3\CMS\Form\FormRuntime $formRuntime */
+        if ($element instanceof AbstractRenderable) {
+            if ($element->getType() === 'Page') {
+                $propertyType = 'renderingOptions';
+            }
+        }
+
+        /** @var FormRuntime $formRuntime */
         $formRuntime = $renderingContext
             ->getViewHelperVariableContainer()
             ->get(RenderRenderableViewHelper::class, 'formRuntime');
